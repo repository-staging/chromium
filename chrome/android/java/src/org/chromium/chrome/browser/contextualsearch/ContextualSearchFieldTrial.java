@@ -82,7 +82,7 @@ public class ContextualSearchFieldTrial {
         // Allow disabling the feature remotely.
         if (getBooleanParam(DISABLED_PARAM)) return false;
 
-        return true;
+        return false;
     }
 
     /**

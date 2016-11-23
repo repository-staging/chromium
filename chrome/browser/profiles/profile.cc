@@ -323,7 +323,7 @@ void Profile::RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry) {
 #if BUILDFLAG(IS_ANDROID)
   registry->RegisterStringPref(
       prefs::kContextualSearchEnabled,
-      std::string(),
+      "false",
       user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
   registry->RegisterBooleanPref(
       prefs::kContextualSearchWasFullyPrivacyEnabled, false,
