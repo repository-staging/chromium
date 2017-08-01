@@ -47,7 +47,7 @@ void RegisterProfilePrefs(PrefRegistrySimple* registry) {
                              base::Time());
 
   registry->RegisterBooleanPref(
-      prefs::kEnableDoNotTrack, false,
+      prefs::kEnableDoNotTrack, true,
       user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
   registry->RegisterBooleanPref(prefs::kUserBypass3pcExceptionsMigrated, false);
 
