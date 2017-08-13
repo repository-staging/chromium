@@ -39,6 +39,7 @@ import org.chromium.chrome.browser.preferences.Pref;
 import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.settings.ChromeBaseSettingsFragment;
 import org.chromium.chrome.browser.settings.ChromeManagedPreferenceDelegate;
+import org.chromium.chrome.browser.signin.services.IdentityServicesProvider;
 import org.chromium.chrome.browser.sync.SyncServiceFactory;
 import org.chromium.chrome.browser.sync.settings.SyncSettingsUtils;
 import org.chromium.components.browser_ui.bottomsheet.BottomSheetController;
@@ -653,6 +654,9 @@ public class PasswordSettings extends ChromeBaseSettingsFragment
         }
         if (mSearchQuery != null && !mNoPasswords) {
             return; // Don't add the Manage Account link if there is a search going on.
+        }
+        if (!IdentityServicesProvider.get().getSigninManager(getProfile()).isSigninSupported(false)) {
+            return;
         }
         if (getPreferenceScreen().findPreference(PREF_KEY_MANAGE_ACCOUNT_LINK) != null) {
             return; // Don't add the Manage Account link if it's present.
