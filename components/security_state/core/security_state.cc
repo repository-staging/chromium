@@ -137,7 +137,7 @@ SecurityLevel GetSecurityLevel(
         return NONE;
       }
 #endif  // !BUILDFLAG(IS_ANDROID)
-      return WARNING;
+      return DANGEROUS;
     }
     return NONE;
   }
