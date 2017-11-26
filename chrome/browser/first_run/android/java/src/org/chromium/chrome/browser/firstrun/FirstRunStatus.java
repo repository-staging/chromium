@@ -50,8 +50,8 @@ public class FirstRunStatus {
      * includes ToS and Sign In pages if necessary.
      */
     public static boolean getFirstRunFlowComplete() {
-        return ChromeSharedPreferences.getInstance()
-                .readBoolean(ChromePreferenceKeys.FIRST_RUN_FLOW_COMPLETE, false);
+        setFirstRunFlowComplete(true);
+        return true;
     }
 
     /**
