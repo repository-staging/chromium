@@ -325,13 +325,17 @@ bool VariationsFieldTrialCreatorBase::SetUpFieldTrials(
 
   bool used_seed = false;
   if (!used_testing_config) {
+#if defined(FIELDTRIAL_SEED_ENABLED)
     used_seed =
         CreateTrialsFromSeed(*entropy_providers, feature_list.get(),
                              safe_seed_manager, synthetic_trial_registry);
+#endif
   }
 
+#if defined(FIELDTRIAL_SEED_ENABLED)
   platform_field_trials->SetUpClientSideFieldTrials(
       used_seed, *entropy_providers, feature_list.get());
+#endif
 
   platform_field_trials->RegisterFeatureOverrides(feature_list.get());
 
