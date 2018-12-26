@@ -368,7 +368,7 @@ config("compiler") {
       } else if ((is_posix && !is_chromeos && !is_nacl) || is_fuchsia) {
         if (current_os != "aix") {
           # Not available on aix.
-          cflags += [ "-fstack-protector" ]
+          cflags += [ "-fstack-protector-strong" ]
         }
       }
     }
