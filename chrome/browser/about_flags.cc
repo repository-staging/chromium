@@ -5172,16 +5172,6 @@ const FeatureEntry kFeatureEntries[] = {
      kOsCrOS | kOsLinux | kOsLacros | kOsAndroid,
      FEATURE_VALUE_TYPE(mojo::core::kMojoLinuxChannelSharedMem)},
 #endif
-#if BUILDFLAG(IS_ANDROID)
-    {"enable-site-isolation-for-password-sites",
-     flag_descriptions::kSiteIsolationForPasswordSitesName,
-     flag_descriptions::kSiteIsolationForPasswordSitesDescription, kOsAndroid,
-     FEATURE_VALUE_TYPE(
-         site_isolation::features::kSiteIsolationForPasswordSites)},
-    {"enable-site-per-process", flag_descriptions::kStrictSiteIsolationName,
-     flag_descriptions::kStrictSiteIsolationDescription, kOsAndroid,
-     SINGLE_VALUE_TYPE(switches::kSitePerProcess)},
-#endif
     {"enable-isolated-web-apps", flag_descriptions::kEnableIsolatedWebAppsName,
      flag_descriptions::kEnableIsolatedWebAppsDescription, kOsDesktop,
      FEATURE_VALUE_TYPE(features::kIsolatedWebApps)},
