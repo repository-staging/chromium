@@ -163,6 +163,10 @@ struct NewTabURLDetails {
   NewTabURLDetails(const GURL& url, NewTabURLState state)
       : url(url), state(state) {}
 
+  static bool ShouldUseLocalNewTab() {
+    return true;
+  }
+
   static NewTabURLDetails ForProfile(Profile* profile) {
     // Incognito and Guest profiles have their own New Tab.
     // This function may also be called by other off-the-record profiles that
@@ -174,6 +178,9 @@ struct NewTabURLDetails {
 
 #if BUILDFLAG(IS_ANDROID)
     const GURL local_url;
+    if (ShouldUseLocalNewTab()) {
+      return NewTabURLDetails(local_url, NEW_TAB_URL_VALID);
+    }
 #else
     const bool default_is_google = DefaultSearchProviderIsGoogle(profile);
     const GURL local_url(default_is_google
