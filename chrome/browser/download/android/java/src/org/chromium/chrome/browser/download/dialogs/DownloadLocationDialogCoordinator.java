@@ -196,13 +196,9 @@ public class DownloadLocationDialogCoordinator implements ModalDialogProperties.
     }
 
     private PropertyModel getLocationDialogModel() {
-        boolean isInitial =
-                DownloadDialogBridge.getPromptForDownloadAndroid(mProfile)
-                        == DownloadPromptStatus.SHOW_INITIAL;
-
         PropertyModel.Builder builder =
                 new PropertyModel.Builder(DownloadLocationDialogProperties.ALL_KEYS);
-        builder.with(DownloadLocationDialogProperties.DONT_SHOW_AGAIN_CHECKBOX_CHECKED, isInitial);
+        builder.with(DownloadLocationDialogProperties.DONT_SHOW_AGAIN_CHECKBOX_CHECKED, false);
         builder.with(
                 DownloadLocationDialogProperties.FILE_NAME, new File(mSuggestedPath).getName());
         builder.with(DownloadLocationDialogProperties.SHOW_SUBTITLE, true);
