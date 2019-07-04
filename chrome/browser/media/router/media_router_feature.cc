@@ -152,7 +152,7 @@ bool MediaRouterEnabled(content::BrowserContext* context) {
     pref_values.insert(std::make_pair(context, allowed));
     return allowed;
   }
-  return true;
+  return false;
 }
 
 #if !BUILDFLAG(IS_ANDROID)
