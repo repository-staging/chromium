@@ -165,7 +165,7 @@ void RegisterProfilePrefs(PrefRegistrySimple* registry) {
   registry->RegisterStringPref(prefs::kMediaRouterReceiverIdHashToken, "",
                                PrefRegistry::PUBLIC);
   registry->RegisterBooleanPref(
-      media_router::prefs::kMediaRouterMediaRemotingEnabled, true);
+      media_router::prefs::kMediaRouterMediaRemotingEnabled, false);
   registry->RegisterBooleanPref(
       media_router::prefs::kMediaRouterShowCastSessionsStartedByOtherDevices,
       true);
