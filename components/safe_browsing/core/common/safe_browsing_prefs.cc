@@ -196,7 +196,7 @@ void RegisterProfilePrefs(PrefRegistrySimple* registry) {
   registry->RegisterBooleanPref(
       prefs::kSafeBrowsingSawInterstitialScoutReporting, false);
   registry->RegisterBooleanPref(
-      prefs::kSafeBrowsingExtendedReportingOptInAllowed, true);
+      prefs::kSafeBrowsingExtendedReportingOptInAllowed, false);
   registry->RegisterTimePref(
       prefs::kSafeBrowsingEsbProtegoPingWithTokenLastLogTime, base::Time());
   registry->RegisterTimePref(
