@@ -94,34 +94,7 @@ public class LanguageSettings extends ChromeBaseSettingsFragment
                 (ContentLanguagesPreference) findPreference(PREFERRED_LANGUAGES_KEY);
         mLanguageListPref.initialize(this, getProfile(), getPrefService());
 
-        ChromeSwitchPreference translateSwitch =
-                (ChromeSwitchPreference) findPreference(TRANSLATE_SWITCH_KEY);
-        boolean isTranslateEnabled = getPrefService().getBoolean(Pref.OFFER_TRANSLATE_ENABLED);
-        translateSwitch.setChecked(isTranslateEnabled);
-
-        translateSwitch.setOnPreferenceChangeListener(
-                new Preference.OnPreferenceChangeListener() {
-                    @Override
-                    public boolean onPreferenceChange(Preference preference, Object newValue) {
-                        boolean enabled = (boolean) newValue;
-                        getPrefService().setBoolean(Pref.OFFER_TRANSLATE_ENABLED, enabled);
-                        mLanguageListPref.notifyPrefChanged();
-                        LanguagesManager.recordAction(
-                                enabled
-                                        ? LanguagesManager.LanguageSettingsActionType
-                                                .ENABLE_TRANSLATE_GLOBALLY
-                                        : LanguagesManager.LanguageSettingsActionType
-                                                .DISABLE_TRANSLATE_GLOBALLY);
-                        return true;
-                    }
-                });
-        translateSwitch.setManagedPreferenceDelegate(
-                new ChromeManagedPreferenceDelegate(getProfile()) {
-                    @Override
-                    public boolean isPreferenceControlledByPolicy(Preference preference) {
-                        return getPrefService().isManagedPreference(Pref.OFFER_TRANSLATE_ENABLED);
-                    }
-                });
+        getPreferenceScreen().removePreference(findPreference(TRANSLATE_SWITCH_KEY));
     }
 
     /**
