@@ -30,7 +30,7 @@ import java.util.Map;
  */
 public class HelpAndFeedbackLauncherImpl implements HelpAndFeedbackLauncher {
     protected static final String FALLBACK_SUPPORT_URL =
-            "https://support.google.com/chrome/topic/6069782";
+            "https://grapheneos.org/usage#web-browsing";
 
     private static ProfileKeyedMap<HelpAndFeedbackLauncher> sProfileToLauncherMap;
     private final HelpAndFeedbackLauncherDelegate mDelegate;
