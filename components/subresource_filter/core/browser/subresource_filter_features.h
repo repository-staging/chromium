@@ -125,6 +125,7 @@ struct Configuration {
   static Configuration MakePresetForLiveRunOnPhishingSites();
   static Configuration MakePresetForPerformanceTestingDryRunOnAllSites();
   static Configuration MakePresetForLiveRunForBetterAds();
+  static Configuration MakePresetForLiveRunOnAllSites();
 
   ActivationConditions activation_conditions;
   ActivationOptions activation_options;
@@ -231,6 +232,7 @@ extern const char kDisablePresetsParameterName[];
 extern const char kPresetLiveRunOnPhishingSites[];
 extern const char kPresetPerformanceTestingDryRunOnAllSites[];
 extern const char kPresetLiveRunForBetterAds[];
+extern const char kPresetLiveRunOnAllSites[];
 
 }  // namespace subresource_filter
 

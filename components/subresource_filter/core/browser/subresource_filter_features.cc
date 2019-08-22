@@ -133,7 +133,9 @@ std::vector<Configuration> FillEnabledPresetConfigurations(
       {kPresetPerformanceTestingDryRunOnAllSites, ad_tagging_enabled,
        &Configuration::MakePresetForPerformanceTestingDryRunOnAllSites},
       {kPresetLiveRunForBetterAds, true,
-       &Configuration::MakePresetForLiveRunForBetterAds}};
+       &Configuration::MakePresetForLiveRunForBetterAds},
+      {kPresetLiveRunOnAllSites, true,
+       &Configuration::MakePresetForLiveRunOnAllSites}};
 
   CommaSeparatedStrings enabled_presets(
       TakeVariationParamOrReturnEmpty(params, kEnablePresetsParameterName));
@@ -281,6 +283,7 @@ const char kPresetPerformanceTestingDryRunOnAllSites[] =
     "performance_testing_dryrun_on_all_sites";
 const char kPresetLiveRunForBetterAds[] =
     "liverun_on_better_ads_violating_sites";
+const char kPresetLiveRunOnAllSites[] = "liverun_on_all_sites";
 
 // Configuration --------------------------------------------------------------
 
@@ -308,6 +311,14 @@ Configuration Configuration::MakePresetForLiveRunForBetterAds() {
                        ActivationScope::ACTIVATION_LIST,
                        ActivationList::BETTER_ADS);
   config.activation_conditions.priority = 800;
+  return config;
+}
+
+// static
+Configuration Configuration::MakePresetForLiveRunOnAllSites() {
+  Configuration config(mojom::ActivationLevel::kEnabled,
+                       ActivationScope::ALL_SITES);
+  config.activation_conditions.priority = 600;
   return config;
 }
 
