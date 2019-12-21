@@ -664,8 +664,7 @@ std::u16string FormatUrlWithAdjustments(
     *prefix_end = static_cast<size_t>(url_string.length());
 
   // Host.
-  bool trim_trivial_subdomains =
-      (format_types & kFormatUrlOmitTrivialSubdomains) != 0;
+  bool trim_trivial_subdomains = false;
   bool trim_mobile_prefix = (format_types & kFormatUrlOmitMobilePrefix) != 0;
   AppendFormattedComponent(
       spec, parsed.host,
