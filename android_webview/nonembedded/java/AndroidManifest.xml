@@ -34,7 +34,7 @@ by a child template that "extends" this file.
     <!-- Required to run the foreground service-->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
-    <application android:label="{{ application_label|default('Android System WebView') }}"
+    <application android:label="{{ application_label|default('Vanadium System WebView') }}"
                  android:icon="@{{manifest_package|default('com.android.webview')}}:drawable/icon_webview"
                  android:name="{{ application_name|default('org.chromium.android_webview.nonembedded.WebViewApkApplication') }}"
                  android:multiArch="true"
