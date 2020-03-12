@@ -202,7 +202,7 @@ void RegisterProfilePrefs(PrefRegistrySimple* registry) {
   registry->RegisterTimePref(
       prefs::kSafeBrowsingEsbProtegoPingWithoutTokenLastLogTime, base::Time());
   registry->RegisterBooleanPref(
-      prefs::kSafeBrowsingEnabled, true,
+      prefs::kSafeBrowsingEnabled, false,
       user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
   registry->RegisterBooleanPref(prefs::kSafeBrowsingEnhanced, false);
   registry->RegisterBooleanPref(prefs::kSafeBrowsingProceedAnywayDisabled,
