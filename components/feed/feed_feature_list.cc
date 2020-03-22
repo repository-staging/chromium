@@ -27,7 +27,7 @@ const char kEnableRssLinkReader[] = "enable-rss-link-reader";
 // changed, please update the cached one's default value in CachedFeatureFlags.
 BASE_FEATURE(kInterestFeedV2,
              "InterestFeedV2",
-             base::FEATURE_ENABLED_BY_DEFAULT);
+             base::FEATURE_DISABLED_BY_DEFAULT);
 
 BASE_FEATURE(kInterestFeedV2Hearts,
              "InterestFeedV2Hearts",
