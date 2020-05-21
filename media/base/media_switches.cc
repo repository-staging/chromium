@@ -1160,7 +1160,7 @@ BASE_FEATURE(kMediaDrmPersistentLicense,
 // which will trigger provisioning process after MediaDrmBridge is created.
 BASE_FEATURE(kMediaDrmPreprovisioning,
              "MediaDrmPreprovisioning",
-             base::FEATURE_ENABLED_BY_DEFAULT);
+             base::FEATURE_DISABLED_BY_DEFAULT);
 
 // Determines if MediaDrmOriginIdManager should attempt to pre-provision origin
 // IDs at startup (whenever a profile is loaded). Also used by tests that
