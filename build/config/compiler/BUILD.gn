@@ -389,7 +389,7 @@ config("compiler") {
     }
 
     if (is_clang) {
-      cflags += [ "-ftrivial-auto-var-init=zero" ]
+      cflags += [ "-ftrivial-auto-var-init=zero", "-Wno-unused-command-line-argument" ]
     }
 
     # Linker warnings.
