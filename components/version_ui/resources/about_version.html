@@ -54,13 +54,6 @@ about:version template page
           <img alt="$i18n{logo_alt_text}" src="chrome://theme/IDR_PRODUCT_LOGO">
         </picture>
 </if>
-<if expr="is_ios or is_android">
-        <picture>
-          <source srcset="images/product_logo_white.png" media="(prefers-color-scheme: dark)">
-          <source srcset="images/product_logo.png" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)">
-          <img alt="$i18n{logo_alt_text}" src="images/product_logo.png">
-        </picture>
-</if>
         <div id="company">$i18n{company}</div>
         <div id="copyright">$i18n{copyright}</div>
       </div>
