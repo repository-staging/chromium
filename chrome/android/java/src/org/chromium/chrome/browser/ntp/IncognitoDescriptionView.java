@@ -358,9 +358,9 @@ public class IncognitoDescriptionView extends LinearLayout {
                 getContext()
                         .getResources()
                         .getString(R.string.new_tab_otr_subtitle_with_reading_list);
-        boolean learnMoreInSubtitle = mWidthDp > WIDE_LAYOUT_THRESHOLD_DP;
+        boolean learnMoreInSubtitle = false;
 
-        mLearnMore.setVisibility(learnMoreInSubtitle ? View.GONE : View.VISIBLE);
+        mLearnMore.setVisibility(View.GONE);
 
         if (!learnMoreInSubtitle) {
             // Revert to the original text.
