@@ -1835,7 +1835,7 @@ BASE_FEATURE(kPrefetchFontLookupTables,
 // crbug.com/988956.
 BASE_FEATURE(kPrefetchPrivacyChanges,
              "PrefetchPrivacyChanges",
-             base::FEATURE_DISABLED_BY_DEFAULT);
+             base::FEATURE_ENABLED_BY_DEFAULT);
 
 BASE_FEATURE(kPreloadingHeuristicsMLModel,
              "PreloadingHeuristicsMLModel",
