@@ -42,7 +42,9 @@
 
 namespace {
 
+#if 0
 const size_t kMaxMessageSize = 1024 * 1024;  // 1MB
+#endif
 
 constexpr char kBadAuthenticationError[] = "BadAuthentication";
 constexpr char kBadAuthenticationShortError[] = "badauth";
@@ -265,6 +267,7 @@ void GaiaAuthFetcher::CreateAndStartGaiaFetcher(
     const net::NetworkTrafficAnnotationTag& traffic_annotation) {
   DCHECK(!fetch_pending_) << "Tried to fetch two things at once!";
 
+#if 0
   auto resource_request = std::make_unique<network::ResourceRequest>();
   resource_request->url = gaia_gurl;
   original_url_ = gaia_gurl;
@@ -319,6 +322,7 @@ void GaiaAuthFetcher::CreateAndStartGaiaFetcher(
       base::BindOnce(&GaiaAuthFetcher::OnURLLoadComplete,
                      base::Unretained(this)),
       kMaxMessageSize);
+#endif
 }
 
 // static
