@@ -145,6 +145,10 @@ public class OmahaBase {
     }
 
     static boolean isDisabled() {
+        if (!VersionNumberGetter.ENABLE_UPDATE_DETECTION_BY_DEFAULT) {
+            return true;
+        }
+
         return sDisabledForTesting;
     }
 

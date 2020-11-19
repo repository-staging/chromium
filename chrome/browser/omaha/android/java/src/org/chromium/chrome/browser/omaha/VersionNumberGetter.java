@@ -78,6 +78,8 @@ public class VersionNumberGetter {
         return Build.VERSION.SDK_INT >= MIN_SDK_VERSION.getValue();
     }
 
+    public static final boolean ENABLE_UPDATE_DETECTION_BY_DEFAULT = false;
+
     /**
      * Checks if we know about a newer version available than the one we're using.  This does not
      * actually fire any requests over to the server: it just checks the version we stored the last
@@ -87,6 +89,10 @@ public class VersionNumberGetter {
      */
     static boolean isNewerVersionAvailable() {
         assert !ThreadUtils.runningOnUiThread();
+
+        if (!ENABLE_UPDATE_DETECTION_BY_DEFAULT) {
+            return false;
+        }
 
         // This may be explicitly enabled for some channels and for unit tests.
         if (sDisableUpdateDetectionForTesting) {
