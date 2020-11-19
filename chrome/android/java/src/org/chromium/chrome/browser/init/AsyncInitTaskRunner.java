@@ -39,7 +39,7 @@ public abstract class AsyncInitTaskRunner {
 
     @VisibleForTesting
     boolean shouldFetchVariationsSeedDuringFirstRun() {
-        return VersionInfo.isOfficialBuild();
+        return false;
     }
 
     @VisibleForTesting
