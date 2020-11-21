@@ -118,7 +118,7 @@ vars = {
 
   # Check out and download nacl for ChromeOS only.
   # This can be disabled e.g. with custom_vars.
-  'checkout_nacl': 'checkout_chromeos',
+  'checkout_nacl': False,
 
   # By default, do not check out src-internal. This can be overridden e.g. with
   # custom_vars.
