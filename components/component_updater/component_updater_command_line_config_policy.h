@@ -42,7 +42,7 @@ class ComponentUpdaterCommandLineConfigPolicy final
   bool background_downloads_enabled_ = false;
   bool deltas_enabled_ = true;
   bool fast_update_ = false;
-  bool pings_enabled_ = true;
+  bool pings_enabled_ = false;
   bool test_request_ = false;
 
   // If non-zero, time interval until the first component update check.
