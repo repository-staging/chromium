@@ -211,7 +211,7 @@ void ContentSettingsRegistry::Init() {
            ContentSettingsInfo::EXCEPTIONS_ON_SECURE_ORIGINS_ONLY);
 
   Register(ContentSettingsType::PROTECTED_MEDIA_IDENTIFIER,
-           "protected-media-identifier", CONTENT_SETTING_ALLOW,
+           "protected-media-identifier", CONTENT_SETTING_BLOCK,
            WebsiteSettingsInfo::UNSYNCABLE, /*allowlisted_primary_schemes=*/{},
 #if BUILDFLAG(IS_ANDROID)
            /*valid_settings=*/
