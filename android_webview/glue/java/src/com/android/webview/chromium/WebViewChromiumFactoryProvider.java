@@ -528,10 +528,6 @@ public class WebViewChromiumFactoryProvider implements WebViewFactoryProvider {
                 }
             }
 
-            if (!FastVariationsSeedSafeModeAction.hasRun()) {
-                mAwInit.startVariationsInit();
-            }
-
             mShouldDisableThreadChecking = shouldDisableThreadChecking(ctx);
 
             setSingleton(this);
