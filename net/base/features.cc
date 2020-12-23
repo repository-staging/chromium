@@ -122,23 +122,23 @@ const base::FeatureParam<base::TimeDelta>
 
 BASE_FEATURE(kSplitCacheByIncludeCredentials,
              "SplitCacheByIncludeCredentials",
-             base::FEATURE_DISABLED_BY_DEFAULT);
+             base::FEATURE_ENABLED_BY_DEFAULT);
 
 BASE_FEATURE(kSplitCacheByNetworkIsolationKey,
              "SplitCacheByNetworkIsolationKey",
-             base::FEATURE_DISABLED_BY_DEFAULT);
+             base::FEATURE_ENABLED_BY_DEFAULT);
 
 BASE_FEATURE(kSplitCacheByCrossSiteMainFrameNavigationBoolean,
              "SplitCacheByCrossSiteMainFrameNavigationBoolean",
-             base::FEATURE_DISABLED_BY_DEFAULT);
+             base::FEATURE_ENABLED_BY_DEFAULT);
 
 BASE_FEATURE(kSplitCacheByMainFrameNavigationInitiator,
              "SplitCacheByMainFrameNavigationInitiator",
-             base::FEATURE_DISABLED_BY_DEFAULT);
+             base::FEATURE_ENABLED_BY_DEFAULT);
 
 BASE_FEATURE(kSplitCacheByNavigationInitiator,
              "SplitCacheByNavigationInitiator",
-             base::FEATURE_DISABLED_BY_DEFAULT);
+             base::FEATURE_ENABLED_BY_DEFAULT);
 
 BASE_FEATURE(kHttpCacheKeyingExperimentControlGroup2024,
              "HttpCacheKeyingExperimentControlGroup2024",
@@ -146,7 +146,7 @@ BASE_FEATURE(kHttpCacheKeyingExperimentControlGroup2024,
 
 BASE_FEATURE(kSplitCodeCacheByNetworkIsolationKey,
              "SplitCodeCacheByNetworkIsolationKey",
-             base::FEATURE_DISABLED_BY_DEFAULT);
+             base::FEATURE_ENABLED_BY_DEFAULT);
 
 BASE_FEATURE(kPartitionConnectionsByNetworkIsolationKey,
              "PartitionConnectionsByNetworkIsolationKey",
