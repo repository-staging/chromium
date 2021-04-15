@@ -567,6 +567,8 @@ public class AppMenuPropertiesDelegateImpl implements AppMenuPropertiesDelegate 
         menu.findItem(R.id.reader_mode_prefs_id)
                 .setVisible(isCurrentTabNotNull && shouldShowReaderModePrefs(currentTab));
 
+        menu.findItem(R.id.help_id).setVisible(false);
+
         updateManagedByMenuItem(menu, currentTab);
 
         // Only display quick delete divider line on the page menu and if quick delete is enabled.
