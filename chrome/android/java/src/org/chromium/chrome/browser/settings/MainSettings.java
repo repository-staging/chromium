@@ -266,6 +266,8 @@ public class MainSettings extends ChromeBaseSettingsFragment
             templateUrlService.load();
         }
 
+        getPreferenceScreen().removePreference(findPreference(PREF_SAFETY_CHECK));
+
         new AdaptiveToolbarStatePredictor(getContext(), getProfile(), null)
                 .recomputeUiState(
                         uiState -> {
