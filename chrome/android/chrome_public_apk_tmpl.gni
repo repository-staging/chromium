@@ -475,6 +475,8 @@ template("chrome_common_apk_or_module_tmpl") {
       asset_deps += [ "//chrome/android:chrome_bundle_module_pak_assets" ]
     } else if (_is_monochrome) {
       asset_deps += [ "//chrome/android:monochrome_apk_pak_assets" ]
+    } else if (_is_trichrome) {
+      asset_deps += [ "//chrome/android:trichrome_chrome_apk_pak_assets" ]
     } else {
       assert(!_is_trichrome)
       asset_deps += [ "//chrome/android:chrome_apk_pak_assets" ]

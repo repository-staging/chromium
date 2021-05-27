@@ -2525,6 +2525,10 @@ if (current_toolchain == default_toolchain) {
     is_trichrome = true
     is_bundle_module = true
   }
+  resource_packaging("trichrome_chrome_apk_pak_assets") {
+    is_monochrome = false
+    is_trichrome = true
+  }
 
   # Exists separately from chrome_public_base_module_java_for_test to allow
   # downstream to depend on test support packages without needing to depend on
@@ -2899,6 +2903,39 @@ if (current_toolchain == default_toolchain) {
               "expectations/$target_name.$target_cpu.libs_and_assets.expected"
         }
       }
+    }
+  }
+ 
+  chrome_public_apk_or_module_tmpl("trichrome_chrome_apk") {
+    apk_name = "TrichromeChrome"
+    is_trichrome = true
+    target_type = "android_apk"
+    static_library_provider = ":trichrome_library_apk"
+    if (android_64bit_target_cpu) {
+      is_64_bit_browser = false
+      include_64_bit_webview = true
+    }
+  }
+  
+  if (android_64bit_target_cpu) {
+    if (!skip_secondary_abi_for_cq) {
+      chrome_public_apk_or_module_tmpl("trichrome_chrome_64_32_apk") {
+        apk_name = "TrichromeChrome6432"
+        is_trichrome = true
+        target_type = "android_apk"
+        static_library_provider = ":trichrome_library_64_32_apk"
+        is_64_bit_browser = true
+        include_32_bit_webview = true
+      }
+    }
+  
+    chrome_public_apk_or_module_tmpl("trichrome_chrome_64_apk") {
+      apk_name = "TrichromeChrome64"
+      is_trichrome = true
+      target_type = "android_apk"
+      static_library_provider = ":trichrome_library_64_apk"
+      is_64_bit_browser = true
+      include_32_bit_webview = false
     }
   }
 
