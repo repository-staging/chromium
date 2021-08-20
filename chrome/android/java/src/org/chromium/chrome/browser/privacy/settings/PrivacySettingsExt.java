@@ -25,6 +25,8 @@ import org.chromium.components.user_prefs.UserPrefs;
 
 final class PrivacySettingsExt {
 
+    private static final String PREF_SEARCH_SUGGESTIONS = "search_suggestions";
+
     private static final Preference.OnPreferenceChangeListener getListener(@NonNull Profile profile) {
         return (pref, val) -> {
             PrefService prefService = UserPrefs.get(profile);
@@ -32,6 +34,9 @@ final class PrivacySettingsExt {
                 return false;
             }
             String key = pref.getKey();
+            if (PREF_SEARCH_SUGGESTIONS.equals(key)) {
+                prefService.setBoolean(Pref.SEARCH_SUGGEST_ENABLED, (boolean) val);
+            }
             return true;
         };
     }
@@ -45,6 +50,9 @@ final class PrivacySettingsExt {
                     return false;
                 }
                 String key = pref.getKey();
+                if (PREF_SEARCH_SUGGESTIONS.equals(key)) {
+                    return prefService.isManagedPreference(Pref.SEARCH_SUGGEST_ENABLED);
+                }
                 return false;
             }
         };
@@ -69,10 +77,22 @@ final class PrivacySettingsExt {
         int SECURITY_PREFERENCES_ORDER =
                 ChromeFeatureList.isEnabled(ChromeFeatureList.PRIVACY_SANDBOX_SETTINGS_4) ? 2 : 9999;
         SettingsUtils.addPreferencesFromResource(prefFragment, R.xml.privacy_preferences_ext);
+        ChromeSwitchPreference searchSuggestionsPref =
+                (ChromeSwitchPreference) prefFragment.findPreference(PREF_SEARCH_SUGGESTIONS);
+        if (searchSuggestionsPref != null) {
+            searchSuggestionsPref.setOrder(PRIVACY_PREFERENCES_ORDER);
+            searchSuggestionsPref.setOnPreferenceChangeListener(getListener(profile));
+            searchSuggestionsPref.setManagedPreferenceDelegate(getDelegate(profile));
+        }
     }
 
     static void updatePreferences(@NonNull PreferenceFragmentCompat prefFragment, @NonNull Profile profile) {
         ThreadUtils.checkUiThread();
         PrefService prefService = UserPrefs.get(profile);
+        ChromeSwitchPreference searchSuggestionsPref =
+                (ChromeSwitchPreference) prefFragment.findPreference(PREF_SEARCH_SUGGESTIONS);
+        SettingsExtUtils.safelyUpdateSwitchPreference(/* switchPref */ searchSuggestionsPref,
+                /* newSummary*/ null,
+                /* newCheckedValue*/ prefService.getBoolean(Pref.SEARCH_SUGGEST_ENABLED));
     }
 }
