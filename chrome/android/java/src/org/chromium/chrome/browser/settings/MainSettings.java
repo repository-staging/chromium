@@ -267,6 +267,8 @@ public class MainSettings extends ChromeBaseSettingsFragment
         }
 
         getPreferenceScreen().removePreference(findPreference(PREF_SAFETY_CHECK));
+        getPreferenceScreen().removePreference(findPreference(PREF_ACCOUNT_AND_GOOGLE_SERVICES_SECTION));
+        getPreferenceScreen().removePreference(findPreference(PREF_GOOGLE_SERVICES));
 
         new AdaptiveToolbarStatePredictor(getContext(), getProfile(), null)
                 .recomputeUiState(
@@ -379,6 +381,9 @@ public class MainSettings extends ChromeBaseSettingsFragment
 
     private void updateGoogleServicePreference() {
         ChromeBasePreference googleServicePreference = findPreference(PREF_GOOGLE_SERVICES);
+        if (googleServicePreference == null) {
+            return;
+        }
         if (ChromeFeatureList.isEnabled(
                 ChromeFeatureList.REPLACE_SYNC_PROMOS_WITH_SIGN_IN_PROMOS)) {
             googleServicePreference.setIcon(R.drawable.ic_google_services_48dp_with_bg);
