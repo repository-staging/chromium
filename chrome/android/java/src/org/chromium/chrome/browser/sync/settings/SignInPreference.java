@@ -176,6 +176,7 @@ public class SignInPreference extends Preference
     }
 
     private void setupSigninDisallowed() {
+        setViewEnabledAndShowAlertIcon(/* enabled= */ false, /* alertIconVisible= */ false);
         mWasGenericSigninPromoDisplayed = false;
     }
 
