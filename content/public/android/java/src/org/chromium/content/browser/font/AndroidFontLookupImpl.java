@@ -186,7 +186,7 @@ public class AndroidFontLookupImpl implements AndroidFontLookup {
      * @param fontUniqueName The ICU case folded unique full font name to fetch.
      */
     private ReadOnlyFile fetchFontInBackground(String fontUniqueName, Core core) {
-        ParcelFileDescriptor fileDescriptor = tryFetchFont(fontUniqueName);
+        ParcelFileDescriptor fileDescriptor = null;
         if (fileDescriptor == null) {
             // Avoid re-requesting this font in future.
             mExpectedFonts.remove(fontUniqueName);
