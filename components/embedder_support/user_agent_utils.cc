@@ -187,6 +187,7 @@ const blink::UserAgentBrandList GetUserAgentBrandList(
   bool parse_result = base::StringToInt(major_version, &major_version_number);
   DCHECK(parse_result);
   std::optional<std::string> brand;
+  brand = "Google Chrome";
 #if !BUILDFLAG(CHROMIUM_BRANDING)
   brand = version_info::GetProductName();
 #endif
