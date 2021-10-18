@@ -170,7 +170,7 @@ void RegisterBrowserUserPrefs(user_prefs::PrefRegistrySyncable* registry) {
 #endif
 
   registry->RegisterBooleanPref(
-      prefs::kHttpsOnlyModeEnabled, false,
+      prefs::kHttpsOnlyModeEnabled, true,
       user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
   registry->RegisterBooleanPref(
       prefs::kHttpsFirstBalancedMode, false,
