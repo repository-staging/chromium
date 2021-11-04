@@ -19,10 +19,11 @@ namespace sandbox::policy {
 class SANDBOX_POLICY_EXPORT RendererProcessPolicy : public BPFBasePolicy {
  public:
 #if BUILDFLAG(IS_LINUX) || BUILDFLAG(IS_CHROMEOS)
-  RendererProcessPolicy();
+  explicit RendererProcessPolicy(bool is_jit_disabled);
 #elif BUILDFLAG(IS_ANDROID)
   explicit RendererProcessPolicy(
-      const BaselinePolicyAndroid::RuntimeOptions& options);
+      const BaselinePolicyAndroid::RuntimeOptions& options,
+      bool is_jit_disabled);
 #endif
 
   RendererProcessPolicy(const RendererProcessPolicy&) = delete;
@@ -31,6 +32,9 @@ class SANDBOX_POLICY_EXPORT RendererProcessPolicy : public BPFBasePolicy {
   ~RendererProcessPolicy() override;
 
   bpf_dsl::ResultExpr EvaluateSyscall(int system_call_number) const override;
+
+ private:
+  const bool is_jit_disabled_; // Disable dynamic code execution if jitless
 };
 
 }  // namespace sandbox::policy

@@ -17,6 +17,8 @@
 #include "base/command_line.h"
 #include "base/feature_list.h"
 #include "base/notreached.h"
+#include "base/strings/string_split.h"
+#include "gin/gin_features.h"
 #include "build/build_config.h"
 #include "build/chromeos_buildflags.h"
 #include "ppapi/buildflags/buildflags.h"
@@ -54,6 +56,7 @@
 #include "sandbox/policy/linux/bpf_service_policy_linux.h"
 #include "sandbox/policy/linux/bpf_speech_recognition_policy_linux.h"
 #include "sandbox/policy/linux/bpf_utility_policy_linux.h"
+#include "third_party/blink/public/common/switches.h"
 
 #if BUILDFLAG(ENABLE_SCREEN_AI_SERVICE)
 #include "sandbox/policy/linux/bpf_screen_ai_policy_linux.h"
@@ -182,8 +185,26 @@ std::unique_ptr<BPFBasePolicy> SandboxSeccompBPF::PolicyForSandboxType(
   switch (sandbox_type) {
     case sandbox::mojom::Sandbox::kGpu:
       return GetGpuProcessSandbox(options);
-    case sandbox::mojom::Sandbox::kRenderer:
-      return std::make_unique<RendererProcessPolicy>();
+    case sandbox::mojom::Sandbox::kRenderer: {
+      const base::CommandLine& command_line =
+          *base::CommandLine::ForCurrentProcess();
+      bool dynamic_code_can_be_disabled = false;
+      if (command_line.HasSwitch(blink::switches::kJavaScriptFlags)) {
+        std::string js_flags =
+            command_line.GetSwitchValueASCII(blink::switches::kJavaScriptFlags);
+        std::vector<std::string_view> js_flag_list = base::SplitStringPiece(
+            js_flags, ",", base::TRIM_WHITESPACE, base::SPLIT_WANT_NONEMPTY);
+        for (const auto& js_flag : js_flag_list) {
+          if (js_flag == "--jitless") {
+            // If v8 is running jitless then there is no need for the ability to
+            // mark writable pages as executable to be available to the process.
+            dynamic_code_can_be_disabled = true;
+            break;
+          }
+        }
+      }
+      return std::make_unique<RendererProcessPolicy>(dynamic_code_can_be_disabled);
+    }
 #if BUILDFLAG(ENABLE_PPAPI)
     case sandbox::mojom::Sandbox::kPpapi:
       return std::make_unique<PpapiProcessPolicy>();
@@ -205,9 +226,27 @@ std::unique_ptr<BPFBasePolicy> SandboxSeccompBPF::PolicyForSandboxType(
     case sandbox::mojom::Sandbox::kAudio:
       return std::make_unique<AudioProcessPolicy>();
     case sandbox::mojom::Sandbox::kService:
-      return std::make_unique<ServiceProcessPolicy>();
-    case sandbox::mojom::Sandbox::kServiceWithJit:
-      return std::make_unique<ServiceProcessPolicy>();
+      return std::make_unique<ServiceProcessPolicy>(true);
+    case sandbox::mojom::Sandbox::kServiceWithJit: {
+      const base::CommandLine& command_line =
+          *base::CommandLine::ForCurrentProcess();
+      bool dynamic_code_can_be_disabled = false;
+      if (command_line.HasSwitch(blink::switches::kJavaScriptFlags)) {
+        std::string js_flags =
+            command_line.GetSwitchValueASCII(blink::switches::kJavaScriptFlags);
+        std::vector<std::string_view> js_flag_list = base::SplitStringPiece(
+            js_flags, ",", base::TRIM_WHITESPACE, base::SPLIT_WANT_NONEMPTY);
+        for (const auto& js_flag : js_flag_list) {
+          if (js_flag == "--jitless") {
+            // If v8 is running jitless then there is no need for the ability to
+            // mark writable pages as executable to be available to the process.
+            dynamic_code_can_be_disabled = true;
+            break;
+          }
+        }
+      }
+      return std::make_unique<ServiceProcessPolicy>(dynamic_code_can_be_disabled);
+    }
     case sandbox::mojom::Sandbox::kSpeechRecognition:
       return std::make_unique<SpeechRecognitionProcessPolicy>();
 #if BUILDFLAG(ENABLE_SCREEN_AI_SERVICE)

@@ -17,6 +17,10 @@
 #include "sandbox/policy/linux/bpf_renderer_policy_linux.h"
 #include "sandbox/policy/mojom/sandbox.mojom.h"
 #include "sandbox/policy/sandbox_type.h"
+
+#include "base/command_line.h"
+#include "base/strings/string_split.h"
+#include "third_party/blink/public/common/switches.h"
 #endif
 
 namespace content {
@@ -52,10 +56,28 @@ bool RendererMainPlatformDelegate::EnableSandbox() {
   if (sandbox::policy::SandboxTypeFromCommandLine(
           *base::CommandLine::ForCurrentProcess()) ==
           sandbox::mojom::Sandbox::kRenderer &&
-      base::FeatureList::IsEnabled(
-          sandbox::policy::features::kUseRendererProcessPolicy)) {
+    base::FeatureList::IsEnabled(
+        sandbox::policy::features::kUseRendererProcessPolicy)) {
+    const base::CommandLine& command_line =
+        *base::CommandLine::ForCurrentProcess();
+    bool dynamic_code_can_be_disabled = false;
+    if (command_line.HasSwitch(blink::switches::kJavaScriptFlags)) {
+      std::string js_flags =
+          command_line.GetSwitchValueASCII(blink::switches::kJavaScriptFlags);
+      std::vector<std::string_view> js_flag_list = base::SplitStringPiece(
+          js_flags, ",", base::TRIM_WHITESPACE, base::SPLIT_WANT_NONEMPTY);
+      for (const auto& js_flag : js_flag_list) {
+        if (js_flag == "--jitless") {
+          // If v8 is running jitless then there is no need for the ability to
+          // mark writable pages as executable to be available to the process.
+          dynamic_code_can_be_disabled = true;
+          break;
+        }
+      }
+    }
     starter.set_policy(
-        std::make_unique<sandbox::policy::RendererProcessPolicy>(options));
+        std::make_unique<sandbox::policy::RendererProcessPolicy>(options,
+          dynamic_code_can_be_disabled));
   } else {
     starter.set_policy(
         std::make_unique<sandbox::BaselinePolicyAndroid>(options));

@@ -16,13 +16,16 @@ namespace policy {
 // Consider UtilityProcessPolicy if this is too restrictive.
 class ServiceProcessPolicy : public BPFBasePolicy {
  public:
-  ServiceProcessPolicy() = default;
+  explicit ServiceProcessPolicy(bool is_jit_disabled);
   ~ServiceProcessPolicy() override = default;
 
   bpf_dsl::ResultExpr EvaluateSyscall(int system_call_number) const override;
 
   ServiceProcessPolicy(const ServiceProcessPolicy&) = delete;
   ServiceProcessPolicy& operator=(const ServiceProcessPolicy&) = delete;
+
+ private:
+  const bool is_jit_disabled_;  // Disable dynamic code generation if jitless
 };
 
 }  // namespace policy

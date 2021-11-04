@@ -257,19 +257,19 @@ ResultExpr EvaluateSyscallImpl(int fs_denied_errno,
 #if defined(__i386__) || defined(__x86_64__) || defined(__mips__) || \
     defined(__aarch64__)
   if (sysno == __NR_mmap)
-    return RestrictMmapFlags();
+    return RestrictMmapFlagsNoWX();
 #endif
 
 #if defined(__i386__) || defined(__arm__) || \
     (defined(ARCH_CPU_MIPS_FAMILY) && defined(ARCH_CPU_32_BITS))
   if (sysno == __NR_mmap2)
-    return RestrictMmapFlags();
+    return RestrictMmapFlagsNoWX();
 #endif
 
   if (sysno == __NR_mprotect || sysno == __NR_pkey_mprotect) {
     // pkey_mprotect is identical to mprotect except for the additional (last)
     // parameter, which can be ignored here.
-    return RestrictMprotectFlags();
+    return RestrictMprotectFlagsNoWX();
   }
 
   if (sysno == __NR_prctl)

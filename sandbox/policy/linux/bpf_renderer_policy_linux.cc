@@ -49,15 +49,34 @@ ResultExpr RestrictIoctl() {
 
 }  // namespace
 #if !BUILDFLAG(IS_ANDROID)
-RendererProcessPolicy::RendererProcessPolicy() = default;
+RendererProcessPolicy::RendererProcessPolicy(bool is_jit_disabled)
+    : is_jit_disabled_(is_jit_disabled) {}
 #else
 RendererProcessPolicy::RendererProcessPolicy(
-    const BaselinePolicyAndroid::RuntimeOptions& options)
-    : BPFBasePolicy(options) {}
+    const BaselinePolicyAndroid::RuntimeOptions& options,
+    bool is_jit_disabled)
+    : BPFBasePolicy(options), is_jit_disabled_(is_jit_disabled) {}
 #endif  // !BUILDFLAG(IS_ANDROID)
 RendererProcessPolicy::~RendererProcessPolicy() = default;
 
 ResultExpr RendererProcessPolicy::EvaluateSyscall(int sysno) const {
+  if (!is_jit_disabled_) {
+    switch (sysno) {
+#if defined(__i386__) || defined(__x86_64__) || defined(__mips__) || \
+    defined(__aarch64__)
+      case __NR_mmap:
+#endif
+#if defined(__i386__) || defined(__arm__) || \
+    (defined(ARCH_CPU_MIPS_FAMILY) && defined(ARCH_CPU_32_BITS))
+      case __NR_mmap2:
+#endif
+        return RestrictMmapFlags();
+      case __NR_mprotect:
+      case __NR_pkey_mprotect:
+        return RestrictMprotectFlags();
+    }
+  }
+
   switch (sysno) {
     // The baseline policy allows __NR_clock_gettime. Allow
     // clock_getres() for V8. crbug.com/329053.

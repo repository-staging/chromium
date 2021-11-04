@@ -121,6 +121,9 @@ ResultExpr AudioProcessPolicy::EvaluateSyscall(int system_call_number) const {
 #endif
     default:
 #if defined(__x86_64__)
+      if (system_call_number == __NR_shmat)
+        return RestrictShmatFlags();
+
       if (SyscallSets::IsSystemVSemaphores(system_call_number) ||
           SyscallSets::IsSystemVSharedMemory(system_call_number)) {
         return Allow();
