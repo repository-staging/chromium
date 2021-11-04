@@ -15,6 +15,7 @@
 #include <sys/prctl.h>
 #include <sys/ptrace.h>
 #include <sys/resource.h>
+#include <sys/shm.h>
 #include <sys/stat.h>
 #include <sys/time.h>
 #include <sys/types.h>
@@ -244,6 +245,31 @@ ResultExpr RestrictMmapFlags() {
   return If((flags & ~kAllowedMask) == 0, Allow()).Else(CrashSIGSYS());
 }
 
+ResultExpr RestrictMmapFlagsNoWX() {
+  // The flags you see are actually the allowed ones, and the variable is a
+  // "denied" mask because of the negation operator.
+  // Significantly, we don't permit MAP_HUGETLB, or the newer flags such as
+  // MAP_POPULATE.
+  // TODO(davidung), remove MAP_DENYWRITE with updated Tegra libraries.
+
+  const Arg<int> prot(2);
+  const Arg<int> flags(3);
+
+  const BoolExpr is_mapping_w_x = (prot & (PROT_WRITE | PROT_EXEC)) != (PROT_WRITE | PROT_EXEC);
+
+  const BoolExpr is_anon_mapping_nx =
+      AllOf((prot & PROT_EXEC) == 0,
+            (flags & MAP_ANONYMOUS) == MAP_ANONYMOUS);
+
+  const uint64_t kAllowedMask = MAP_SHARED | MAP_PRIVATE | MAP_STACK |
+                                MAP_NORESERVE | MAP_FIXED | MAP_DENYWRITE |
+                                MAP_LOCKED;
+
+  return If(is_anon_mapping_nx, Allow())
+      .ElseIf(AllOf(is_mapping_w_x, (flags & ~kAllowedMask) == 0), Allow())
+      .Else(CrashSIGSYS());
+}
+
 ResultExpr RestrictMprotectFlags() {
   // The flags you see are actually the allowed ones, and the variable is a
   // "denied" mask because of the negation operator.
@@ -258,6 +284,24 @@ ResultExpr RestrictMprotectFlags() {
 #endif
   const uint64_t kAllowedMask =
       PROT_READ | PROT_WRITE | PROT_EXEC | kArchSpecificFlags;
+  const Arg<int> prot(2);
+  return If((prot & ~kAllowedMask) == 0, Allow()).Else(CrashSIGSYS());
+}
+
+ResultExpr RestrictMprotectFlagsNoWX() {
+  // The flags you see are actually the allowed ones, and the variable is a
+  // "denied" mask because of the negation operator.
+  // Significantly, we don't permit making non-executable pages executable,
+  // as well as weird undocumented flags such as PROT_GROWSDOWN.
+#if defined(ARCH_CPU_ARM64)
+  // Allows PROT_MTE and PROT_BTI (as explained higher up) on only Arm
+  // platforms.
+  const uint64_t kArchSpecificFlags = PROT_MTE | PROT_BTI;
+#else
+  const uint64_t kArchSpecificFlags = 0;
+#endif
+  const uint64_t kAllowedMask =
+      PROT_READ | PROT_WRITE | kArchSpecificFlags;
   const Arg<int> prot(2);
   return If((prot & ~kAllowedMask) == 0, Allow()).Else(CrashSIGSYS());
 }
@@ -302,6 +346,17 @@ ResultExpr RestrictFcntlCommands() {
             If((long_arg & ~kAllowedSeals) == 0, Allow()).Else(CrashSIGSYS()))
       .Default(CrashSIGSYS());
   // clang-format on
+}
+
+ResultExpr RestrictShmatFlags() {
+  // The flags you see are actually the allowed ones, and the variable is a
+  // "denied" mask because of the negation operator.
+  // Significantly, we don't permit flags that allow for dynamic code
+  // generation such as SHM_EXEC.
+  const uint64_t kAllowedMask =
+      0 | SHM_RND | SHM_RDONLY | SHM_REMAP;
+  const Arg<int> shmflg(2);
+  return If((shmflg & ~kAllowedMask) == 0, Allow()).Else(CrashSIGSYS());
 }
 
 #if defined(__i386__) || defined(__mips__)

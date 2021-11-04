@@ -40,10 +40,24 @@ SANDBOX_EXPORT bpf_dsl::ResultExpr RestrictIoctl();
 // Crash if any other flag is used.
 SANDBOX_EXPORT bpf_dsl::ResultExpr RestrictMmapFlags();
 
+// Restrict mmap(2) arguments to:
+// Allow: MAP_SHARED | MAP_PRIVATE | MAP_ANONYMOUS |
+// MAP_STACK | MAP_NORESERVE | MAP_FIXED | MAP_DENYWRITE.
+// Crash if any other flag is used.
+// Also, in prots, restrict the allowed protections to:
+// PROT_READ | PROT_WRITE ^ PROT_EXEC.
+// PROT_BTI | PROT_MTE is additionally allowed on 64-bit Arm.
+SANDBOX_EXPORT bpf_dsl::ResultExpr RestrictMmapFlagsNoWX();
+
 // Restrict the prot argument in mprotect(2).
 // Only allow: PROT_READ | PROT_WRITE | PROT_EXEC.
 // PROT_BTI | PROT_MTE is additionally allowed on 64-bit Arm.
 SANDBOX_EXPORT bpf_dsl::ResultExpr RestrictMprotectFlags();
+
+// Restrict the prot argument in mprotect(2).
+// Only allow: PROT_READ | PROT_WRITE.
+// PROT_BTI | PROT_MTE is additionally allowed on 64-bit Arm.
+SANDBOX_EXPORT bpf_dsl::ResultExpr RestrictMprotectFlagsNoWX();
 
 // Restrict fcntl(2) cmd argument to:
 // We allow F_GETFL, F_SETFL, F_GETFD, F_SETFD, F_DUPFD, F_DUPFD_CLOEXEC,
@@ -51,6 +65,10 @@ SANDBOX_EXPORT bpf_dsl::ResultExpr RestrictMprotectFlags();
 // Also, in F_SETFL, restrict the allowed flags to: O_ACCMODE | O_APPEND |
 // O_NONBLOCK | O_SYNC | O_LARGEFILE | O_CLOEXEC | O_NOATIME.
 SANDBOX_EXPORT bpf_dsl::ResultExpr RestrictFcntlCommands();
+
+// Restrict the shmflg argument in shmat(2).
+// Only allow: SHM_RND | SHM_RDONLY | SHM_REMAP.
+SANDBOX_EXPORT bpf_dsl::ResultExpr RestrictShmatFlags();
 
 #if defined(__i386__) || defined(__mips__)
 // Restrict socketcall(2) to only allow socketpair(2), send(2), recv(2),
