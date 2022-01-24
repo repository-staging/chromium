@@ -339,6 +339,7 @@ public class PrivacySettings extends ChromeBaseSettingsFragment
             preloadPagesPreference.setSummary(
                     PreloadPagesSettingsFragment.getPreloadPagesSummaryString(
                             getContext(), getProfile()));
+            getPreferenceScreen().removePreference(preloadPagesPreference);
         }
 
         Preference secureDnsPref = findPreference(PREF_SECURE_DNS);
