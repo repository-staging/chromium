@@ -106,6 +106,7 @@ ContentSettingsType kPermissionType[] = {
     ContentSettingsType::SENSORS,
     ContentSettingsType::NOTIFICATIONS,
     ContentSettingsType::JAVASCRIPT,
+    ContentSettingsType::JAVASCRIPT_JIT,
 #if !BUILDFLAG(IS_ANDROID)
     ContentSettingsType::IMAGES,
 #endif
@@ -1273,6 +1274,11 @@ bool PageInfo::ShouldShowPermission(
       !base::FeatureList::IsEnabled(
           features::kAutomaticFullscreenContentSetting)) {
     return false;
+  }
+
+  // Always show JIT settings UI when when it has a site-specific override.
+  if (info.type == ContentSettingsType::JAVASCRIPT_JIT) {
+    return true;
   }
 
   const bool is_incognito =

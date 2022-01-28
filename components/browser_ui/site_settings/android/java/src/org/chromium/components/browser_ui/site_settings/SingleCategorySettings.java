@@ -758,6 +758,12 @@ public class SingleCategorySettings extends BaseSiteSettingsFragment
                                 ? R.string.website_settings_add_site_description_javascript_block
                                 : R.string.website_settings_add_site_description_javascript_allow;
                 break;
+            case SiteSettingsCategory.Type.JAVASCRIPT_JIT:
+                resource = WebsitePreferenceBridge.isCategoryEnabled(
+                                   browserContextHandle, ContentSettingsType.JAVASCRIPT_JIT)
+                        ? R.string.website_settings_add_site_description_javascript_jit_block
+                        : R.string.website_settings_add_site_description_javascript_jit_allow;
+                break;
             case SiteSettingsCategory.Type.SOUND:
                 resource =
                         WebsitePreferenceBridge.isCategoryEnabled(
@@ -907,6 +913,7 @@ public class SingleCategorySettings extends BaseSiteSettingsFragment
         switch (mCategory.getType()) {
             case SiteSettingsCategory.Type.SOUND:
             case SiteSettingsCategory.Type.JAVASCRIPT:
+            case SiteSettingsCategory.Type.JAVASCRIPT_JIT:
             case SiteSettingsCategory.Type.SITE_DATA:
             case SiteSettingsCategory.Type.FEDERATED_IDENTITY_API:
             case SiteSettingsCategory.Type.REQUEST_DESKTOP_SITE:

@@ -133,6 +133,7 @@ void PageInfoControllerAndroid::SetPermissionInfo(
   permissions_to_display.push_back(ContentSettingsType::IDLE_DETECTION);
   permissions_to_display.push_back(ContentSettingsType::IMAGES);
   permissions_to_display.push_back(ContentSettingsType::JAVASCRIPT);
+  permissions_to_display.push_back(ContentSettingsType::JAVASCRIPT_JIT);
   permissions_to_display.push_back(ContentSettingsType::POPUPS);
   permissions_to_display.push_back(ContentSettingsType::ADS);
   permissions_to_display.push_back(
@@ -215,6 +216,8 @@ std::optional<ContentSetting> PageInfoControllerAndroid::GetSettingToDisplay(
   } else if (permission.type == ContentSettingsType::JAVASCRIPT) {
     // The javascript content setting should show up if it is blocked globally
     // to give users an easy way to create exceptions.
+    return permission.default_setting;
+  } else if (permission.type == ContentSettingsType::JAVASCRIPT_JIT) {
     return permission.default_setting;
   } else if (permission.type == ContentSettingsType::SOUND) {
     // The sound content setting should always show up when the tab has played
