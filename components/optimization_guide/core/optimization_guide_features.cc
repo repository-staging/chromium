@@ -56,7 +56,7 @@ BASE_FEATURE(kOptimizationHints,
 // Enables fetching from a remote Optimization Guide Service.
 BASE_FEATURE(kRemoteOptimizationGuideFetching,
              "OptimizationHintsFetching",
-             base::FEATURE_ENABLED_BY_DEFAULT);
+             base::FEATURE_DISABLED_BY_DEFAULT);
 
 BASE_FEATURE(kRemoteOptimizationGuideFetchingAnonymousDataConsent,
              "OptimizationHintsFetchingAnonymousDataConsent",
