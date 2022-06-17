@@ -3,4 +3,10 @@
  Use of this source code is governed by a GPLv2 only-style license that can be
  found in the LICENSE file. -->
 <grit-part>
+  <message name="IDS_CLOSE_TABS_ON_EXIT_TITLE" desc="Title of closing tabs on exit menu item">
+    Close tabs on exit
+  </message>
+  <message name="IDS_CLOSE_TABS_ON_EXIT_SUMMARY" desc="Summary of closing tabs on exit menu item">
+    Don't persist tabs between browsing sessions
+  </message>
 </grit-part>

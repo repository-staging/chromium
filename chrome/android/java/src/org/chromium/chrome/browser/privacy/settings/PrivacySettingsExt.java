@@ -26,6 +26,7 @@ import org.chromium.components.user_prefs.UserPrefs;
 final class PrivacySettingsExt {
 
     private static final String PREF_SEARCH_SUGGESTIONS = "search_suggestions";
+    private static final String PREF_CLOSE_TABS_ON_EXIT = SharedPrefsExt.CLOSE_TABS_ON_EXIT.getKey();
 
     private static final Preference.OnPreferenceChangeListener getListener(@NonNull Profile profile) {
         return (pref, val) -> {
@@ -36,6 +37,8 @@ final class PrivacySettingsExt {
             String key = pref.getKey();
             if (PREF_SEARCH_SUGGESTIONS.equals(key)) {
                 prefService.setBoolean(Pref.SEARCH_SUGGEST_ENABLED, (boolean) val);
+            } else if (PREF_CLOSE_TABS_ON_EXIT.equals(key)) {
+                SharedPrefsExt.CLOSE_TABS_ON_EXIT.put((boolean) val);
             }
             return true;
         };
@@ -84,6 +87,13 @@ final class PrivacySettingsExt {
             searchSuggestionsPref.setOnPreferenceChangeListener(getListener(profile));
             searchSuggestionsPref.setManagedPreferenceDelegate(getDelegate(profile));
         }
+
+        ChromeSwitchPreference closeTabsOnExitPref =
+                (ChromeSwitchPreference) prefFragment.findPreference(PREF_CLOSE_TABS_ON_EXIT);
+        if (closeTabsOnExitPref != null) {
+            closeTabsOnExitPref.setOrder(PRIVACY_PREFERENCES_ORDER);
+            closeTabsOnExitPref.setOnPreferenceChangeListener(getListener(profile));
+        }
     }
 
     static void updatePreferences(@NonNull PreferenceFragmentCompat prefFragment, @NonNull Profile profile) {
@@ -94,5 +104,11 @@ final class PrivacySettingsExt {
         SettingsExtUtils.safelyUpdateSwitchPreference(/* switchPref */ searchSuggestionsPref,
                 /* newSummary*/ null,
                 /* newCheckedValue*/ prefService.getBoolean(Pref.SEARCH_SUGGEST_ENABLED));
+
+        ChromeSwitchPreference closeTabsOnExitPref =
+                (ChromeSwitchPreference) prefFragment.findPreference(PREF_CLOSE_TABS_ON_EXIT);
+        SettingsExtUtils.safelyUpdateSwitchPreference(/* switchPref */ closeTabsOnExitPref,
+                /* newSummary*/ null,
+                /* newCheckedValue*/ SharedPrefsExt.CLOSE_TABS_ON_EXIT.get());
     }
 }

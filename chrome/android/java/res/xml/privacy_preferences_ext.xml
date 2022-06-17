@@ -10,5 +10,10 @@ that can be found in the LICENSE file.
         android:title="@string/improve_search_suggestions_title"
         android:summary="@string/improve_search_suggestions_summary"
         android:persistent="false"/>
+    <org.chromium.components.browser_ui.settings.ChromeSwitchPreference
+        android:key="close_tabs_on_exit"
+        android:title="@string/close_tabs_on_exit_title"
+        android:summary="@string/close_tabs_on_exit_summary"
+        android:persistent="false"/>
 </PreferenceScreen>
 
