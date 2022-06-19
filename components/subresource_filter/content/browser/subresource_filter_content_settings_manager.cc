@@ -84,21 +84,7 @@ void SubresourceFilterContentSettingsManager::OnDidShowUI(const GURL& url) {
 
 bool SubresourceFilterContentSettingsManager::ShouldShowUIForSite(
     const GURL& url) const {
-  if (!should_use_smart_ui())
-    return true;
-
-  std::optional<base::Value::Dict> dict = GetSiteMetadata(url);
-  if (!dict)
-    return true;
-
-  if (std::optional<double> last_shown_time =
-          dict->FindDouble(kInfobarLastShownTimeKey)) {
-    base::Time last_shown =
-        base::Time::FromSecondsSinceUnixEpoch(*last_shown_time);
-    if (clock_->Now() - last_shown < kDelayBeforeShowingInfobarAgain)
-      return false;
-  }
-  return true;
+  return false;
 }
 
 void SubresourceFilterContentSettingsManager::SetSiteMetadataBasedOnActivation(
