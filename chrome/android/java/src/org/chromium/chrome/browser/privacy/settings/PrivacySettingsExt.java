@@ -27,6 +27,8 @@ final class PrivacySettingsExt {
 
     private static final String PREF_SEARCH_SUGGESTIONS = "search_suggestions";
     private static final String PREF_CLOSE_TABS_ON_EXIT = SharedPrefsExt.CLOSE_TABS_ON_EXIT.getKey();
+    private static final String PREF_OPEN_LINKS_IN_INCOGNITO =
+            SharedPrefsExt.OPEN_LINKS_IN_INCOGNITO.getKey();
 
     private static final Preference.OnPreferenceChangeListener getListener(@NonNull Profile profile) {
         return (pref, val) -> {
@@ -39,6 +41,8 @@ final class PrivacySettingsExt {
                 prefService.setBoolean(Pref.SEARCH_SUGGEST_ENABLED, (boolean) val);
             } else if (PREF_CLOSE_TABS_ON_EXIT.equals(key)) {
                 SharedPrefsExt.CLOSE_TABS_ON_EXIT.put((boolean) val);
+            } else if (PREF_OPEN_LINKS_IN_INCOGNITO.equals(key)) {
+                SharedPrefsExt.OPEN_LINKS_IN_INCOGNITO.put((boolean) val);
             }
             return true;
         };
@@ -94,6 +98,13 @@ final class PrivacySettingsExt {
             closeTabsOnExitPref.setOrder(PRIVACY_PREFERENCES_ORDER);
             closeTabsOnExitPref.setOnPreferenceChangeListener(getListener(profile));
         }
+
+        ChromeSwitchPreference openLinksInIncognitoPref =
+                (ChromeSwitchPreference) prefFragment.findPreference(PREF_OPEN_LINKS_IN_INCOGNITO);
+        if (openLinksInIncognitoPref != null) {
+            openLinksInIncognitoPref.setOrder(PRIVACY_PREFERENCES_ORDER);
+            openLinksInIncognitoPref.setOnPreferenceChangeListener(getListener(profile));
+        }
     }
 
     static void updatePreferences(@NonNull PreferenceFragmentCompat prefFragment, @NonNull Profile profile) {
@@ -110,5 +121,11 @@ final class PrivacySettingsExt {
         SettingsExtUtils.safelyUpdateSwitchPreference(/* switchPref */ closeTabsOnExitPref,
                 /* newSummary*/ null,
                 /* newCheckedValue*/ SharedPrefsExt.CLOSE_TABS_ON_EXIT.get());
+
+        ChromeSwitchPreference openLinksInIncognitoPref =
+                (ChromeSwitchPreference) prefFragment.findPreference(PREF_OPEN_LINKS_IN_INCOGNITO);
+        SettingsExtUtils.safelyUpdateSwitchPreference(/* switchPref */ openLinksInIncognitoPref,
+                /* newSummary*/ null,
+                /* newCheckedValue*/ SharedPrefsExt.OPEN_LINKS_IN_INCOGNITO.get());
     }
 }

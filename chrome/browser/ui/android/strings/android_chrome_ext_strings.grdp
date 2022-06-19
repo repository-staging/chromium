@@ -9,4 +9,10 @@
   <message name="IDS_CLOSE_TABS_ON_EXIT_SUMMARY" desc="Summary of closing tabs on exit menu item">
     Don't persist tabs between browsing sessions
   </message>
+  <message name="IDS_OPEN_LINKS_IN_INCOGNITO_TITLE" desc="Title of opening external links in incognito tabs menu item">
+    Open external links in incognito
+  </message>
+  <message name="IDS_OPEN_LINKS_IN_INCOGNITO_SUMMARY" desc="Summary of opening external links in incognito tabs menu item">
+    Open links navigated by external apps in incognito tabs
+  </message>
 </grit-part>

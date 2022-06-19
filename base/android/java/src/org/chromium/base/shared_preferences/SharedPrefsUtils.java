@@ -122,6 +122,8 @@ public final class SharedPrefsUtils {
     public static class SharedPrefsExt {
         public static final BoolSharedPref CLOSE_TABS_ON_EXIT =
                 new BoolSharedPref("close_tabs_on_exit", false);
+        public static final BoolSharedPref OPEN_LINKS_IN_INCOGNITO =
+                new BoolSharedPref("open_links_in_incognito", false);
     }
 
     static SharedPreferencesManager getSharedPrefManager() {
@@ -132,7 +134,8 @@ public final class SharedPrefsUtils {
     static boolean isKeyInUse(String key) {
         // clang-format off
         return Arrays.asList(
-            SharedPrefsExt.CLOSE_TABS_ON_EXIT.getKey()
+            SharedPrefsExt.CLOSE_TABS_ON_EXIT.getKey(),
+            SharedPrefsExt.OPEN_LINKS_IN_INCOGNITO.getKey()
         ).contains(key);
         // clang-format on
     }

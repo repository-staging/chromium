@@ -15,5 +15,10 @@ that can be found in the LICENSE file.
         android:title="@string/close_tabs_on_exit_title"
         android:summary="@string/close_tabs_on_exit_summary"
         android:persistent="false"/>
+    <org.chromium.components.browser_ui.settings.ChromeSwitchPreference
+        android:key="open_links_in_incognito"
+        android:title="@string/open_links_in_incognito_title"
+        android:summary="@string/open_links_in_incognito_summary"
+        android:persistent="false"/>
 </PreferenceScreen>
 

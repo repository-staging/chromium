@@ -445,6 +445,7 @@ public class LaunchIntentDispatcher {
 
         if (Intent.ACTION_VIEW.equals(newIntent.getAction())
                 && !IntentHandler.wasIntentSenderChrome(newIntent)) {
+            newIntent = LaunchIntentDispatcherHooks.maybeModifyActionViewIntents(mActivity, newIntent);
             if (!chromeTabbedTaskExists()) {
                 newIntent.putExtra(IntentHandler.EXTRA_STARTED_TABBED_CHROME_TASK, true);
             }

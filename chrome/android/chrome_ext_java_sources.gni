@@ -6,4 +6,5 @@ chrome_ext_java_sources = [
   "java/src/org/chromium/chrome/browser/settings/SettingsExtUtils.java",
   "java/src/org/chromium/chrome/browser/privacy/settings/PrivacySettingsExt.java",
   "java/src/org/chromium/chrome/browser/TabPreferencesUtils.java",
+  "java/src/org/chromium/chrome/browser/LaunchIntentDispatcherHooks.java",
 ]

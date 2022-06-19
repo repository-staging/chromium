@@ -2893,6 +2893,8 @@ public class ChromeTabbedActivity extends ChromeActivity<ChromeActivityComponent
         // - we decided to close the tab, but it was opened by an external app, so we will go
         //   exit Chrome on top of closing the tab
         final boolean minimizeApp =
+                (currentTab.getLaunchType() == TabLaunchType.FROM_EXTERNAL_APP &&
+                TabPreferencesUtils.shouldOpenLinksInIncognito()) ||
                 !shouldCloseTab || TabAssociatedApp.isOpenedFromExternalApp(currentTab);
 
         BackPressManager.record(BackPressHandler.Type.MINIMIZE_APP_AND_CLOSE_TAB);
