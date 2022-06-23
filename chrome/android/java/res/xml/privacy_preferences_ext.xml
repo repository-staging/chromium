@@ -20,5 +20,9 @@ that can be found in the LICENSE file.
         android:title="@string/open_links_in_incognito_title"
         android:summary="@string/open_links_in_incognito_summary"
         android:persistent="false"/>
+    <org.chromium.components.browser_ui.settings.ChromeBasePreference
+        android:key="webrtc_policy"
+        android:title="@string/webrtc_policy_title"
+        android:fragment="org.chromium.chrome.browser.webrtc.settings.WebRtcPolicySettings"/>
 </PreferenceScreen>
 

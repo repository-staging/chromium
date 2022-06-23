@@ -15,4 +15,20 @@
   <message name="IDS_OPEN_LINKS_IN_INCOGNITO_SUMMARY" desc="Summary of opening external links in incognito tabs menu item">
     Open links navigated by external apps in incognito tabs
   </message>
+  <!-- WebRTC toggle -->
+  <message name="IDS_WEBRTC_POLICY_TITLE" desc="WebRTC policy setting label">
+    WebRTC IP handling policy
+  </message>
+  <message name="IDS_WEBRTC_POLICY_DEFAULT" desc="Select value">
+    Default
+  </message>
+  <message name="IDS_WEBRTC_POLICY_DEFAULT_PUBLIC_AND_PRIVATE_INTERFACES" desc="Select value">
+    Default public and private interfaces
+  </message>
+  <message name="IDS_WEBRTC_POLICY_DEFAULT_PUBLIC_INTERFACE_ONLY" desc="Select value">
+    Default public interface only
+  </message>
+  <message name="IDS_WEBRTC_POLICY_DISABLE_NON_PROXIED_UDP" desc="Select value">
+    Disable non-proxied UDP
+  </message>
 </grit-part>

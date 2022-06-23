@@ -17,6 +17,7 @@ import org.chromium.chrome.browser.preferences.Pref;
 import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.settings.ChromeManagedPreferenceDelegate;
 import org.chromium.chrome.browser.settings.SettingsExtUtils;
+import org.chromium.chrome.browser.webrtc.settings.WebRtcPolicySettings;
 import org.chromium.components.browser_ui.settings.ChromeBasePreference;
 import org.chromium.components.browser_ui.settings.ChromeSwitchPreference;
 import org.chromium.components.browser_ui.settings.SettingsUtils;
@@ -29,6 +30,7 @@ final class PrivacySettingsExt {
     private static final String PREF_CLOSE_TABS_ON_EXIT = SharedPrefsExt.CLOSE_TABS_ON_EXIT.getKey();
     private static final String PREF_OPEN_LINKS_IN_INCOGNITO =
             SharedPrefsExt.OPEN_LINKS_IN_INCOGNITO.getKey();
+    private static final String PREF_WEBRTC_POLICY = "webrtc_policy";
 
     private static final Preference.OnPreferenceChangeListener getListener(@NonNull Profile profile) {
         return (pref, val) -> {
@@ -105,6 +107,11 @@ final class PrivacySettingsExt {
             openLinksInIncognitoPref.setOrder(PRIVACY_PREFERENCES_ORDER);
             openLinksInIncognitoPref.setOnPreferenceChangeListener(getListener(profile));
         }
+
+        Preference webRtcPolicyPref = prefFragment.findPreference(PREF_WEBRTC_POLICY);
+        if (webRtcPolicyPref != null) {
+            webRtcPolicyPref.setOrder(PRIVACY_PREFERENCES_ORDER);
+        }
     }
 
     static void updatePreferences(@NonNull PreferenceFragmentCompat prefFragment, @NonNull Profile profile) {
@@ -127,5 +134,9 @@ final class PrivacySettingsExt {
         SettingsExtUtils.safelyUpdateSwitchPreference(/* switchPref */ openLinksInIncognitoPref,
                 /* newSummary*/ null,
                 /* newCheckedValue*/ SharedPrefsExt.OPEN_LINKS_IN_INCOGNITO.get());
+
+        Preference webRtcPolicyPref = prefFragment.findPreference(PREF_WEBRTC_POLICY);
+        SettingsExtUtils.safelyUpdatePreference(/* preference */ webRtcPolicyPref,
+                /* newSummary */ WebRtcPolicySettings.getWebRtcPolicySummaryString(prefFragment.getContext()));
     }
 }
