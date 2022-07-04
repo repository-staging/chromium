@@ -48,6 +48,9 @@
 #include "components/component_updater/url_param_filter_remover.h"
 #include "components/nacl/common/buildflags.h"
 #include "components/safe_browsing/core/common/features.h"
+#if BUILDFLAG(IS_ANDROID)
+#include "components/subresource_filter/android_config/subresource_filter_fetching.h"
+#endif // BUILDFLAG(IS_ANDROID)
 #include "device/vr/buildflags/buildflags.h"
 #include "ppapi/buildflags/buildflags.h"
 #include "third_party/widevine/cdm/buildflags.h"
@@ -130,7 +133,11 @@ void RegisterComponentsForUpdate() {
 #endif  // BUILDFLAG(IS_CHROMEOS)
 #endif  // BUILDFLAG(ENABLE_NACL) && !BUILDFLAG(IS_ANDROID)
 
-  RegisterSubresourceFilterComponent(cus);
+#if BUILDFLAG(IS_ANDROID)
+  if (!subresource_filter::IsInitializedFromConfig()) {
+    RegisterSubresourceFilterComponent(cus);
+  }
+#endif // BUILDFLAG(IS_ANDROID)
   RegisterOnDeviceHeadSuggestComponent(
       cus, g_browser_process->GetApplicationLocale());
   RegisterOptimizationHintsComponent(cus);
