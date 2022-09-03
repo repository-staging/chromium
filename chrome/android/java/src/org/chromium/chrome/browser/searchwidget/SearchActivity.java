@@ -669,6 +669,11 @@ public class SearchActivity extends AsyncInitializationActivity
         Intent intent = SearchActivityUtils.createIntentForStartActivity(this, params);
         if (intent == null) return;
 
+        intent = SearchActivityHooks.modifyIntentForStartActivity(this, intent);
+        if (intent == null) {
+            return;
+        }
+
         if (mIntentOrigin == IntentOrigin.SEARCH_WIDGET) {
             intent.putExtra(SearchWidgetProvider.EXTRA_FROM_SEARCH_WIDGET, true);
         }
