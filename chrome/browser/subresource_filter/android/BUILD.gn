@@ -1,0 +1,38 @@
+# Copyright 2023 Zoraver Kang
+
+import("//build/config/android/rules.gni")
+import("//third_party/jni_zero/jni_zero.gni")
+
+generate_jni("jni_headers") {
+  sources = [
+    "java/src/org/chromium/chrome/browser/subresource_filter/RulesetUpdater.java",
+  ]
+}
+
+android_library("java") {
+  srcjar_deps = [ ":jni_headers" ]
+  sources = [
+    "java/src/org/chromium/chrome/browser/subresource_filter/RulesetUpdater.java",
+  ]
+
+  deps = [
+    ":jni_headers",
+    "//base:base_java",
+    "//components/subresource_filter/android_config:java",
+    "//third_party/jni_zero:jni_zero_java",
+    "//vanadium/android_config/proto:browser_config_parser_java",
+    "//vanadium/android_config/proto:config_proto_java",
+  ]
+}
+
+source_set("android") {
+  sources = [
+    "ruleset_updater.cc",
+    "ruleset_updater.h",
+  ]
+  deps = [
+    ":jni_headers",
+    "//base",
+    "//components/subresource_filter/content/browser",
+  ]
+}
