@@ -201,6 +201,8 @@ public class LaunchIntentDispatcher {
         String query = null;
         final String action = intent.getAction();
         if (Intent.ACTION_SEARCH.equals(action)
+                || Intent.ACTION_WEB_SEARCH.equals(action)
+                || SearchManager.INTENT_ACTION_GLOBAL_SEARCH.equals(action)
                 || MediaStore.INTENT_ACTION_MEDIA_SEARCH.equals(action)) {
             query = IntentUtils.safeGetStringExtra(intent, SearchManager.QUERY);
         }
@@ -213,7 +215,7 @@ public class LaunchIntentDispatcher {
         Intent searchIntent = new Intent(Intent.ACTION_WEB_SEARCH);
         searchIntent.putExtra(SearchManager.QUERY, query);
 
-        if (PackageManagerUtils.canResolveActivity(
+        if (PackageManagerUtils.canOnlyOthersResolveActivity(
                 searchIntent, PackageManager.GET_RESOLVED_FILTER)) {
             mActivity.startActivity(searchIntent);
         } else {

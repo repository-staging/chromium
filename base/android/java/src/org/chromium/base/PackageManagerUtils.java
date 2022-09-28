@@ -92,6 +92,16 @@ public class PackageManagerUtils {
         return pm.hasSystemFeature(feature);
     }
 
+    public static boolean canOnlyOthersResolveActivity(Intent intent, int flags) {
+        for (ResolveInfo ri: queryIntentActivities(intent, flags)) {
+            if (ContextUtils.getApplicationContext()
+                    .getPackageName().equals(ri.activityInfo.packageName)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     /**
      * @return Intent to query a list of installed home launchers.
      */
