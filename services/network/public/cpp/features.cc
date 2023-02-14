@@ -340,7 +340,7 @@ constexpr base::FeatureParam<std::string> kCacheTransparencyPervasivePayloads{
 // accept-language. https://github.com/Tanych/accept-language
 BASE_FEATURE(kReduceAcceptLanguage,
              "ReduceAcceptLanguage",
-             base::FEATURE_DISABLED_BY_DEFAULT);
+             base::FEATURE_ENABLED_BY_DEFAULT);
 
 const base::FeatureParam<base::TimeDelta> kReduceAcceptLanguageCacheDuration{
     &kReduceAcceptLanguage, "reduce-accept-language-cache-duration",
