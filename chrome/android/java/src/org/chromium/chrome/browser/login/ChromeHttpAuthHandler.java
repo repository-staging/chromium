@@ -108,7 +108,7 @@ public class ChromeHttpAuthHandler extends EmptyTabObserver implements LoginProm
         String messageBody =
                 ChromeHttpAuthHandlerJni.get()
                         .getMessageBody(mNativeChromeHttpAuthHandler, ChromeHttpAuthHandler.this);
-        mLoginPrompt = new LoginPrompt(activity, messageBody, null, this);
+        mLoginPrompt = new LoginPrompt(activity, messageBody, tab.getOriginalUrl(), this);
         // In case the autofill data arrives before the prompt is created.
         if (mAutofillUsername != null && mAutofillPassword != null) {
             mLoginPrompt.onAutofillDataAvailable(mAutofillUsername, mAutofillPassword);
