@@ -456,10 +456,10 @@ public class UrlBar extends AutocompleteEditText {
             // the domain changes. We restore this behavior by mimicking the relevant part of
             // TextView.notifyListeningManagersAfterTextChanged().
             // https://cs.android.com/android/platform/superproject/+/5d123b67756dffcfdebdb936ab2de2b29c799321:frameworks/base/core/java/android/widget/TextView.java;l=10618;drc=master;bpv=0
-            final AutofillManager afm = getContext().getSystemService(AutofillManager.class);
-            if (afm != null) {
-                afm.notifyValueChanged(this);
-            }
+            // final AutofillManager afm = getContext().getSystemService(AutofillManager.class);
+            // if (afm != null) {
+            //     afm.notifyValueChanged(this);
+            // }
         }
 
         limitDisplayableLength();
