@@ -309,7 +309,7 @@ const char* const kDefaultSupportedPartialTranslateLanguages[] = {
 const char kLanguageListFetchPath[] = "translate_a/l?client=chrome";
 
 // Represent if the language list updater is disabled.
-bool update_is_disabled = false;
+bool update_is_disabled = true;
 
 // Retry parameter for fetching.
 const int kMaxRetryOn5xx = 5;
@@ -393,6 +393,10 @@ GURL TranslateLanguageList::TranslateLanguageUrl() {
 }
 
 void TranslateLanguageList::RequestLanguageList() {
+  if (update_is_disabled) {
+    return;
+  }
+
   // If resource requests are not allowed, we'll get a callback when they are.
   if (!resource_requests_allowed_) {
     request_pending_ = true;
