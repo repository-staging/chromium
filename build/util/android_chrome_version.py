@@ -317,7 +317,7 @@ def TranslateVersionCode(version_code, is_webview=False):
                                is_next_build)
 
 
-def GenerateVersionCodes(build_number, patch_number, arch, is_next_build):
+def GenerateVersionCodes(build_number, patch_number, increment_number, arch, is_next_build):
   """Build dict of version codes for the specified build architecture. Eg:
 
   {
@@ -340,7 +340,7 @@ def GenerateVersionCodes(build_number, patch_number, arch, is_next_build):
 
   Thus, this method is responsible for the final two digits of versionCode.
   """
-  base_version_code = (build_number * 1000 + patch_number) * 100
+  base_version_code = (build_number * 1000 + patch_number + increment_number) * 100
 
   if is_next_build:
     base_version_code += _NEXT_BUILD_VERSION_CODE_DIFF
@@ -385,8 +385,8 @@ def main():
   elif args.version_name:
     if not args.arch:
       parser.error('Required --arch')
-    _, _, build, patch = args.version_name.split('.')
-    values = GenerateVersionCodes(int(build), int(patch), args.arch, args.next)
+    _, _, build, patch, increment = args.version_name.split('.')
+    values = GenerateVersionCodes(int(build), int(patch), int(increment), args.arch, args.next)
     for k, v in values.items():
       print(f'{k}={v}')
   else:

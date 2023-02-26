@@ -133,6 +133,10 @@ def BuildParser():
                       help='Write substituted strings to FILE.')
   parser.add_argument('-t', '--template', default=None,
                       help='Use TEMPLATE as the strings to substitute.')
+  parser.add_argument(
+      '--increment',
+      default='0',
+      help='Version increment to append at version_name, add at version_code.')
   parser.add_argument('-x',
                       '--executable',
                       default=False,
@@ -210,9 +214,11 @@ def GenerateValues(options, evals):
   for key, val in evals.items():
     values[key] = str(eval(val, globals(), values))
 
+  values['INCREMENT'] = options.increment
   if options.os == 'android':
     android_chrome_version_codes = android_chrome_version.GenerateVersionCodes(
-        int(values['BUILD']), int(values['PATCH']), options.arch, options.next)
+        int(values['BUILD']), int(values['PATCH']), int(values['INCREMENT']),
+        options.arch, options.next)
     values.update(android_chrome_version_codes)
 
   return values
