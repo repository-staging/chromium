@@ -202,6 +202,7 @@ CHAR_LIMIT guidelines:
   </translations>
   <release seq="1">
     <messages fallback_to_english="true">
+      <part file="android_chrome_ext_strings.grdp" />
       <!-- NOTE: Generic strings used across multiple features belong in //components/browser_ui/strings/android. -->
 
        <!-- Cookie Controls -->
