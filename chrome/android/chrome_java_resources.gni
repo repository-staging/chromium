@@ -7,6 +7,8 @@
 # (for f in $(find java/res/*/ -type f); do echo '  "'$f'",'; done; echo ']') >> chrome_java_resources.gni
 # git cl format
 
+import ("//chrome/android/chrome_ext_java_resources.gni")
+
 chrome_java_resources = [
   "java/res/anim/accelerate_quart.xml",
   "java/res/anim/activity_close_exit.xml",

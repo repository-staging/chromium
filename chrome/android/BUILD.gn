@@ -10,6 +10,9 @@ import("//build/config/cronet/config.gni")
 import("//build/config/python.gni")
 import("//build/util/process_version.gni")
 import("//chrome/android/chrome_common_shared_library.gni")
+import("//chrome/android/chrome_ext_deps.gni")
+import("//chrome/android/chrome_ext_java_sources.gni")
+import("//chrome/android/chrome_ext_java_resources.gni")
 import("//chrome/android/chrome_java_resources.gni")
 import("//chrome/android/chrome_public_apk_tmpl.gni")
 import("//chrome/android/expectations/expectations.gni")
@@ -198,6 +201,8 @@ if (current_toolchain == default_toolchain) {
 
   android_resources("chrome_app_java_resources") {
     sources = chrome_java_resources
+    # Extension of sources at chrome_app_java_resources
+    sources += chrome_ext_java_resources
     sources += [ "//chrome/android/java/res_app/layout/main.xml" ]
 
     deps = [
@@ -783,6 +788,11 @@ if (current_toolchain == default_toolchain) {
 
     # From java_sources.gni.
     sources = chrome_java_sources + [ app_hooks_impl ]
+
+    # Extension of sources, deps, and srcjar_deps for chrome_java target
+    sources += chrome_ext_java_sources
+    deps += chrome_ext_deps
+    srcjar_deps += chrome_ext_srcjar_deps
 
     # Include sources from feed_java_sources.gni.
     sources += feed_java_sources
