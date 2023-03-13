@@ -4886,6 +4886,9 @@ if (is_android) {
       "android/java/src/org/chromium/base/shared_preferences/SharedPreferencesManager.java",
       "android/java/src/org/chromium/base/shared_preferences/StrictPreferenceKeyChecker.java",
     ]
+    sources += [
+      "android/java/src/org/chromium/base/shared_preferences/SharedPrefsUtils.java",
+    ]
   }
 
   android_library("base_cached_flags_java") {

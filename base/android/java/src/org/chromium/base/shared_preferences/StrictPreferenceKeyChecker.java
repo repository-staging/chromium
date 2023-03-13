@@ -52,6 +52,10 @@ class StrictPreferenceKeyChecker implements PreferenceKeyChecker {
      * @return Whether |key| is in use.
      */
     private boolean isKeyInUse(String key) {
+        if (SharedPrefsUtils.isKeyInUse(key)) {
+            return true;
+        }
+
         // For non-dynamic legacy keys, a simple map check is enough.
         if (mRegistry.mLegacyFormatKeys.contains(key)) {
             return true;
