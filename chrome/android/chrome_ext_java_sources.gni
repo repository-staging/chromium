@@ -3,4 +3,5 @@
 # found in the LICENSE file.
 
 chrome_ext_java_sources = [
+  "java/src/org/chromium/chrome/browser/settings/SettingsExtUtils.java",
 ]
