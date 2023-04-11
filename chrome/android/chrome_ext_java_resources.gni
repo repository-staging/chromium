@@ -3,4 +3,5 @@
 # found in the LICENSE file.
 
 chrome_ext_java_resources = [
+  "java/res/xml/privacy_preferences_ext.xml",
 ]

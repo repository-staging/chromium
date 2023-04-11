@@ -81,6 +81,8 @@ public class PrivacySettings extends ChromeBaseSettingsFragment
 
         SettingsUtils.addPreferencesFromResource(this, R.xml.privacy_preferences);
 
+        PrivacySettingsExt.initializePreferences(this, getProfile());
+
         Preference fpProtectionPreference = findPreference(PREF_FP_PROTECTION);
         fpProtectionPreference.setVisible(shouldShowFpProtectionUI());
 
@@ -221,6 +223,8 @@ public class PrivacySettings extends ChromeBaseSettingsFragment
             clearBrowsingDataPreference.setVisible(false);
             clearBrowsingDataAdvancedPreference.setVisible(true);
         }
+
+        PrivacySettingsExt.removeUnwantedPreferences(this);
 
         updatePreferences();
     }
@@ -380,6 +384,9 @@ public class PrivacySettings extends ChromeBaseSettingsFragment
                     ContentSettingsResources.getThirdPartyCookieListSummary(
                             UserPrefs.get(getProfile()).getInteger(COOKIE_CONTROLS_MODE)));
         }
+
+        PrivacySettingsExt.updatePreferences(this, getProfile());
+
     }
 
     private boolean showTrackingProtectionUI() {

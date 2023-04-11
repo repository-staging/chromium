@@ -1,0 +1,9 @@
+<!--
+Copyright 2023 GrapheneOS
+Use of this source code is governed by a GPLv2 only-style license
+that can be found in the LICENSE file.
+-->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+</PreferenceScreen>
+
