@@ -17,10 +17,6 @@ found in the LICENSE file.
         android:title="@string/google_terms_of_service_title"
         app:url="@string/google_terms_of_service_url" />
     <org.chromium.chrome.browser.about_settings.HyperlinkPreference
-        android:key="chrome_additional_terms_of_service"
-        android:title="@string/chrome_additional_terms_of_service_title"
-        app:url="@string/chrome_additional_terms_of_service_url" />
-    <org.chromium.chrome.browser.about_settings.HyperlinkPreference
         android:key="privacy_policy"
         android:title="@string/privacy_policy_title"
         app:url="@string/google_privacy_policy_url" />
