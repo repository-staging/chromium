@@ -115,7 +115,7 @@ class ChromeConfigurator : public update_client::Configurator {
 ChromeConfigurator::ChromeConfigurator(const base::CommandLine* cmdline,
                                        PrefService* pref_service)
     : configurator_impl_(ComponentUpdaterCommandLineConfigPolicy(cmdline),
-                         /*require_encryption=*/false),
+                         /*require_encryption=*/true),
       pref_service_(pref_service),
       persisted_data_(
           update_client::CreatePersistedData(pref_service, nullptr)) {

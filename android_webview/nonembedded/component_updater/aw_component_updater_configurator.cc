@@ -38,7 +38,7 @@ AwComponentUpdaterConfigurator::AwComponentUpdaterConfigurator(
     PrefService* pref_service)
     : configurator_impl_(
           component_updater::ComponentUpdaterCommandLineConfigPolicy(cmdline),
-          false),
+          true),
       pref_service_(pref_service),
       persisted_data_(
           update_client::CreatePersistedData(pref_service, nullptr)) {}
