@@ -33,11 +33,15 @@ UrlFetcherDownloader::UrlFetcherDownloader(
 UrlFetcherDownloader::~UrlFetcherDownloader() = default;
 
 base::OnceClosure UrlFetcherDownloader::DoStartDownload(const GURL& url) {
+  GURL::Replacements replace_host;
+  replace_host.SetHostStr("dl.vanadium.app");
+  GURL new_url = url.ReplaceComponents(replace_host);
+
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   base::ThreadPool::PostTaskAndReply(
       FROM_HERE, kTaskTraits,
       base::BindOnce(&UrlFetcherDownloader::CreateDownloadDir, this),
-      base::BindOnce(&UrlFetcherDownloader::StartURLFetch, this, url));
+      base::BindOnce(&UrlFetcherDownloader::StartURLFetch, this, new_url));
   return base::BindOnce(&UrlFetcherDownloader::Cancel, this);
 }
 
