@@ -19,6 +19,7 @@
 #include "net/url_request/url_request.h"
 #include "services/network/cookie_settings.h"
 #include "services/network/network_context.h"
+#include "services/network/public/mojom/network_context.mojom-shared.h"
 
 namespace net {
 class CookieInclusionStatus;
@@ -34,6 +35,7 @@ class COMPONENT_EXPORT(NETWORK_SERVICE) NetworkServiceNetworkDelegate
   // |network_context| is guaranteed to outlive this class.
   NetworkServiceNetworkDelegate(
       bool enable_referrers,
+      mojom::CrossOriginReferrerPolicy cross_origin_referrer_policy,
       bool validate_referrer_policy_on_initial_request,
       mojo::PendingRemote<mojom::ProxyErrorClient> proxy_error_client_remote,
       NetworkContext* network_context);
@@ -46,6 +48,11 @@ class COMPONENT_EXPORT(NETWORK_SERVICE) NetworkServiceNetworkDelegate
 
   void set_enable_referrers(bool enable_referrers) {
     enable_referrers_ = enable_referrers;
+  }
+
+  void set_cross_origin_referrer_policy(
+      mojom::CrossOriginReferrerPolicy cross_origin_referrer_policy) {
+    cross_origin_referrer_policy_ = cross_origin_referrer_policy;
   }
 
  private:
@@ -119,6 +126,7 @@ class COMPONENT_EXPORT(NETWORK_SERVICE) NetworkServiceNetworkDelegate
                              const GURL& effective_url);
 
   bool enable_referrers_;
+  mojom::CrossOriginReferrerPolicy cross_origin_referrer_policy_;
   bool validate_referrer_policy_on_initial_request_;
   mojo::Remote<mojom::ProxyErrorClient> proxy_error_client_;
   raw_ptr<NetworkContext> network_context_;

@@ -290,6 +290,12 @@ struct NetworkContextFilePaths {
   bool trigger_migration = false;
 };
 
+enum CrossOriginReferrerPolicy {
+  kDefault,
+  kReduce,
+  kDisable,
+};
+
 // Socket brokers used by the ClientSocketFactory for client sockets and
 // SocketFactory for server sockets.
 [EnableIf=is_win]
@@ -317,6 +323,10 @@ struct NetworkContextParams {
 
   // If false, the referrer of requests is never populated.
   bool enable_referrers = true;
+
+  // Configures what referrers are sent cross-origin.
+  CrossOriginReferrerPolicy cross_origin_referrer_policy =
+      CrossOriginReferrerPolicy.kDefault;
 
   // If true, requests initiated with referrers that don't match their referrer
   // policy will fail.
@@ -1296,6 +1306,10 @@ interface NetworkContext {
 
   // If false, the referrer of requests is never populated.
   SetEnableReferrers(bool enable_referrers);
+
+  // Updates the cross-origin referrer policy.
+  SetCrossOriginReferrerPolicy(
+      CrossOriginReferrerPolicy cross_origin_referrer_policy);
 
   // Updates the CT policy to be used for requests. Only applies if the
   // NetworkContextParams set enforce_chrome_ct_policy to true.

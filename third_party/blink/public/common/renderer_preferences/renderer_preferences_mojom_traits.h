@@ -116,6 +116,11 @@ struct BLINK_COMMON_EXPORT
     return data.enable_referrers;
   }
 
+  static const network::mojom::CrossOriginReferrerPolicy&
+      cross_origin_referrer_policy(const ::blink::RendererPreferences& data) {
+    return data.cross_origin_referrer_policy;
+  }
+
   static const bool& allow_cross_origin_auth_prompt(
       const ::blink::RendererPreferences& data) {
     return data.allow_cross_origin_auth_prompt;

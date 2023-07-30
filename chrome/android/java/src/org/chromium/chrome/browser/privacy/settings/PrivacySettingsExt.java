@@ -15,6 +15,7 @@ import org.chromium.chrome.R;
 import org.chromium.chrome.browser.flags.ChromeFeatureList;
 import org.chromium.chrome.browser.preferences.Pref;
 import org.chromium.chrome.browser.profiles.Profile;
+import org.chromium.chrome.browser.referrer.settings.CrossOriginReferrerPolicySettings;
 import org.chromium.chrome.browser.settings.ChromeManagedPreferenceDelegate;
 import org.chromium.chrome.browser.settings.SettingsExtUtils;
 import org.chromium.chrome.browser.webrtc.settings.WebRtcPolicySettings;
@@ -31,6 +32,7 @@ final class PrivacySettingsExt {
     private static final String PREF_OPEN_LINKS_IN_INCOGNITO =
             SharedPrefsExt.OPEN_LINKS_IN_INCOGNITO.getKey();
     private static final String PREF_WEBRTC_POLICY = "webrtc_policy";
+    private static final String PREF_CROSS_ORIGIN_REFERRER_POLICY = "cross_origin_referrer_policy";
 
     private static final Preference.OnPreferenceChangeListener getListener(@NonNull Profile profile) {
         return (pref, val) -> {
@@ -112,6 +114,12 @@ final class PrivacySettingsExt {
         if (webRtcPolicyPref != null) {
             webRtcPolicyPref.setOrder(PRIVACY_PREFERENCES_ORDER);
         }
+
+        final Preference crossOriginReferrerPolicyPref =
+                prefFragment.findPreference(PREF_CROSS_ORIGIN_REFERRER_POLICY);
+        if (crossOriginReferrerPolicyPref != null) {
+            crossOriginReferrerPolicyPref.setOrder(PRIVACY_PREFERENCES_ORDER);
+        }
     }
 
     static void updatePreferences(@NonNull PreferenceFragmentCompat prefFragment, @NonNull Profile profile) {
@@ -138,5 +146,12 @@ final class PrivacySettingsExt {
         Preference webRtcPolicyPref = prefFragment.findPreference(PREF_WEBRTC_POLICY);
         SettingsExtUtils.safelyUpdatePreference(/* preference */ webRtcPolicyPref,
                 /* newSummary */ WebRtcPolicySettings.getWebRtcPolicySummaryString(prefFragment.getContext()));
+
+        final Preference crossOriginReferrerPolicyPref =
+                prefFragment.findPreference(PREF_CROSS_ORIGIN_REFERRER_POLICY);
+        SettingsExtUtils.safelyUpdatePreference(/* preference */ crossOriginReferrerPolicyPref,
+                /* newSummary */ CrossOriginReferrerPolicySettings
+                                         .getCrossOriginReferrerPolicySummaryString(
+                                                 prefFragment.getContext()));
     }
 }

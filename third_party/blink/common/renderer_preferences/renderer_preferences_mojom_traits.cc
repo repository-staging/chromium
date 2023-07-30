@@ -47,6 +47,7 @@ bool StructTraits<blink::mojom::RendererPreferencesDataView,
 
   out->use_custom_colors = data.use_custom_colors();
   out->enable_referrers = data.enable_referrers();
+  out->cross_origin_referrer_policy = data.cross_origin_referrer_policy();
   out->allow_cross_origin_auth_prompt = data.allow_cross_origin_auth_prompt();
   out->enable_do_not_track = data.enable_do_not_track();
   out->enable_encrypted_media = data.enable_encrypted_media();

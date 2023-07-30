@@ -41,10 +41,12 @@ namespace network {
 
 NetworkServiceNetworkDelegate::NetworkServiceNetworkDelegate(
     bool enable_referrers,
+    mojom::CrossOriginReferrerPolicy cross_origin_referrer_policy,
     bool validate_referrer_policy_on_initial_request,
     mojo::PendingRemote<mojom::ProxyErrorClient> proxy_error_client_remote,
     NetworkContext* network_context)
     : enable_referrers_(enable_referrers),
+      cross_origin_referrer_policy_(cross_origin_referrer_policy),
       validate_referrer_policy_on_initial_request_(
           validate_referrer_policy_on_initial_request),
       network_context_(network_context) {
@@ -63,11 +65,38 @@ void NetworkServiceNetworkDelegate::MaybeTruncateReferrer(
     return;
   }
 
+  // Enforce cross-origin referrer policy
+  switch (cross_origin_referrer_policy_) {
+    case mojom::CrossOriginReferrerPolicy::kDefault: {
   if (base::FeatureList::IsEnabled(
           net::features::kCapReferrerToOriginOnCrossOrigin)) {
     if (!url::IsSameOriginWith(effective_url, GURL(request->referrer()))) {
       auto capped_referrer = url::Origin::Create(GURL(request->referrer()));
       request->SetReferrer(capped_referrer.GetURL().spec());
+    }
+  }
+      break;
+    }
+    case mojom::CrossOriginReferrerPolicy::kReduce: {
+      GURL referrer_url = GURL(request->referrer());
+      if (!referrer_url.is_empty() &&
+          !url::IsSameOriginWith(effective_url, referrer_url)) {
+        auto capped_referrer = url::Origin::Create(referrer_url);
+        request->SetReferrer(capped_referrer.GetURL().spec());
+        request->set_referrer_policy(
+            net::ReferrerPolicy::REDUCE_GRANULARITY_ON_TRANSITION_CROSS_ORIGIN);
+      }
+      break;
+    }
+    case mojom::CrossOriginReferrerPolicy::kDisable: {
+      GURL referrer_url = GURL(request->referrer());
+      if (!referrer_url.is_empty() &&
+          !url::IsSameOriginWith(effective_url, referrer_url)) {
+        request->SetReferrer(std::string());
+        request->set_referrer_policy(
+            net::ReferrerPolicy::CLEAR_ON_TRANSITION_CROSS_ORIGIN);
+      }
+      break;
     }
   }
 }

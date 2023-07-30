@@ -13,6 +13,7 @@
 
 #include "base/time/time.h"
 #include "build/build_config.h"
+#include "services/network/public/mojom/network_context.mojom-shared.h"
 #include "third_party/blink/public/common/common_export.h"
 #include "third_party/blink/public/common/user_agent/user_agent_metadata.h"
 #include "ui/gfx/font_render_params.h"
@@ -55,6 +56,9 @@ struct BLINK_COMMON_EXPORT RendererPreferences {
   std::optional<base::TimeDelta> caret_blink_interval;
   bool use_custom_colors{true};
   bool enable_referrers{true};
+  network::mojom::CrossOriginReferrerPolicy cross_origin_referrer_policy {
+      network::mojom::CrossOriginReferrerPolicy::kDefault
+  };
   bool allow_cross_origin_auth_prompt{false};
   bool enable_do_not_track{false};
   bool enable_encrypted_media{true};

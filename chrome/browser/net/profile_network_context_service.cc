@@ -86,6 +86,7 @@
 #include "services/network/public/cpp/features.h"
 #include "services/network/public/mojom/cert_verifier_service.mojom.h"
 #include "services/network/public/mojom/first_party_sets_access_delegate.mojom.h"
+#include "services/network/public/mojom/network_context.mojom-shared.h"
 #include "services/network/public/mojom/network_context.mojom.h"
 #include "services/network/public/mojom/network_service.mojom.h"
 #include "third_party/blink/public/common/features.h"
@@ -297,6 +298,11 @@ ProfileNetworkContextService::ProfileNetworkContextService(Profile* profile)
       prefs::kEnableReferrers, profile_prefs,
       base::BindRepeating(&ProfileNetworkContextService::UpdateReferrersEnabled,
                           base::Unretained(this)));
+  cross_origin_referrer_policy_.Init(
+      prefs::kCrossOriginReferrerPolicy, profile_prefs,
+      base::BindRepeating(
+          &ProfileNetworkContextService::UpdateCrossOriginReferrerPolicy,
+          base::Unretained(this)));
   cookie_settings_ = CookieSettingsFactory::GetForProfile(profile);
   cookie_settings_observation_.Observe(cookie_settings_.get());
 
@@ -394,6 +400,8 @@ void ProfileNetworkContextService::RegisterProfilePrefs(
   registry->RegisterBooleanPref(prefs::kGloballyScopeHTTPAuthCacheEnabled,
                                 false);
   registry->RegisterListPref(prefs::kHSTSPolicyBypassList);
+  registry->RegisterIntegerPref(prefs::kCrossOriginReferrerPolicy,
+      static_cast<int>(network::mojom::CrossOriginReferrerPolicy::kDefault));
   registry->RegisterListPref(prefs::kCACertificates);
   registry->RegisterListPref(prefs::kCACertificatesWithConstraints);
   registry->RegisterListPref(prefs::kCADistrustedCertificates);
@@ -485,6 +493,16 @@ void ProfileNetworkContextService::UpdateReferrersEnabled() {
       });
 }
 
+void ProfileNetworkContextService::UpdateCrossOriginReferrerPolicy() {
+  const bool cross_origin_referrer_policy = cross_origin_referrer_policy_.GetValue();
+  profile_->ForEachLoadedStoragePartition(
+      [&](content::StoragePartition* storage_partition) {
+        storage_partition->GetNetworkContext()->SetCrossOriginReferrerPolicy(
+            static_cast<network::mojom::CrossOriginReferrerPolicy>(
+                cross_origin_referrer_policy));
+      });
+}
+ 
 network::mojom::CTPolicyPtr ProfileNetworkContextService::GetCTPolicy() {
   auto* prefs = profile_->GetPrefs();
   const base::Value::List& ct_excluded =

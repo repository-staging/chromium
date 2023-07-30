@@ -114,6 +114,9 @@ void UpdateFromSystemSettings(blink::RendererPreferences* prefs,
   prefs->accept_languages = GetLanguageListForProfile(
       profile, pref_service->GetString(language::prefs::kAcceptLanguages));
   prefs->enable_referrers = pref_service->GetBoolean(prefs::kEnableReferrers);
+  prefs->cross_origin_referrer_policy =
+      static_cast<network::mojom::CrossOriginReferrerPolicy>(
+          pref_service->GetInteger(prefs::kCrossOriginReferrerPolicy));
   prefs->enable_do_not_track =
       TrackingProtectionSettingsFactory::GetForProfile(profile)
           ->IsDoNotTrackEnabled();

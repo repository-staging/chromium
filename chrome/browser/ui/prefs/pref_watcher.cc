@@ -101,6 +101,8 @@ PrefWatcher::PrefWatcher(Profile* profile)
                                      renderer_callback);
   profile_pref_change_registrar_.Add(prefs::kEnableReferrers,
                                      renderer_callback);
+  profile_pref_change_registrar_.Add(prefs::kCrossOriginReferrerPolicy,
+                                     renderer_callback);
   profile_pref_change_registrar_.Add(prefs::kEnableEncryptedMedia,
                                      renderer_callback);
   profile_pref_change_registrar_.Add(

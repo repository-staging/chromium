@@ -11,4 +11,7 @@ chrome_ext_java_sources = [
   "java/src/org/chromium/chrome/browser/webrtc/settings/WebRtcPolicyPreference.java",
   "java/src/org/chromium/chrome/browser/webrtc/settings/WebRtcPolicySettings.java",
   "java/src/org/chromium/chrome/browser/webrtc/settings/WebRtcPolicyUtils.java",
+  "java/src/org/chromium/chrome/browser/referrer/settings/CrossOriginReferrerPolicyPreference.java",
+  "java/src/org/chromium/chrome/browser/referrer/settings/CrossOriginReferrerPolicySettings.java",
+  "java/src/org/chromium/chrome/browser/referrer/settings/CrossOriginReferrerPolicyUtils.java",
 ]

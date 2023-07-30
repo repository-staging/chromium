@@ -387,6 +387,33 @@ void DedicatedOrSharedWorkerFetchContextImpl::WillSendRequest(
     request.SetReferrerString(WebString());
     request.SetReferrerPolicy(network::mojom::ReferrerPolicy::kNever);
   }
+
+  // Enforce cross-origin referrer policy
+  switch (renderer_preferences_.cross_origin_referrer_policy) {
+    case network::mojom::CrossOriginReferrerPolicy::kDefault:
+      break;
+    case network::mojom::CrossOriginReferrerPolicy::kReduce: {
+      KURL referrerUrl = KURL(request.ReferrerString());
+      if (!referrerUrl.IsEmpty() &&
+          !SecurityOrigin::AreSameOrigin(request.Url(), referrerUrl)) {
+        String originUrl = String(
+            SecurityOrigin::Create(referrerUrl)->ToUrlOrigin().GetURL().spec());
+        request.SetReferrerString(originUrl);
+        request.SetReferrerPolicy(
+            network::mojom::ReferrerPolicy::kOriginWhenCrossOrigin);
+      }
+      break;
+    }
+    case network::mojom::CrossOriginReferrerPolicy::kDisable: {
+      KURL referrerUrl = KURL(request.ReferrerString());
+      if (!referrerUrl.IsEmpty() &&
+          !SecurityOrigin::AreSameOrigin(request.Url(), referrerUrl)) {
+        request.SetReferrerString(WebString());
+        request.SetReferrerPolicy(network::mojom::ReferrerPolicy::kSameOrigin);
+      }
+      break;
+    }
+  }
 }
 
 WebVector<std::unique_ptr<URLLoaderThrottle>>

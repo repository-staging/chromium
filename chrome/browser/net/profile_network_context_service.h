@@ -155,6 +155,7 @@ class ProfileNetworkContextService
   std::string ComputeAcceptLanguage() const;
 
   void UpdateReferrersEnabled();
+  void UpdateCrossOriginReferrerPolicy();
 
   // Gets the current CTPolicy from preferences.
   network::mojom::CTPolicyPtr GetCTPolicy();
@@ -216,6 +217,7 @@ class ProfileNetworkContextService
   BooleanPrefMember quic_allowed_;
   StringPrefMember pref_accept_language_;
   BooleanPrefMember enable_referrers_;
+  IntegerPrefMember cross_origin_referrer_policy_;
   PrefChangeRegistrar pref_change_registrar_;
 
   scoped_refptr<content_settings::CookieSettings> cookie_settings_;

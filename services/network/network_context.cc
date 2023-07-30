@@ -1656,6 +1656,15 @@ void NetworkContext::SetEnableReferrers(bool enable_referrers) {
   network_delegate_->set_enable_referrers(enable_referrers);
 }
 
+void NetworkContext::SetCrossOriginReferrerPolicy(
+    mojom::CrossOriginReferrerPolicy cross_origin_referrer_policy) {
+  // This may only be called on NetworkContexts created with the constructor
+  // that calls MakeURLRequestContext().
+  DCHECK(network_delegate_);
+  network_delegate_->set_cross_origin_referrer_policy(
+      cross_origin_referrer_policy);
+}
+
 #if BUILDFLAG(IS_CT_SUPPORTED)
 void NetworkContext::SetCTPolicy(mojom::CTPolicyPtr ct_policy) {
   if (!require_ct_delegate_)
@@ -2523,6 +2532,7 @@ URLRequestContextOwner NetworkContext::MakeURLRequestContext(
   std::unique_ptr<NetworkServiceNetworkDelegate> network_delegate =
       std::make_unique<NetworkServiceNetworkDelegate>(
           params_->enable_referrers,
+          params_->cross_origin_referrer_policy,
           params_->validate_referrer_policy_on_initial_request,
           std::move(params_->proxy_error_client), this);
   network_delegate_ = network_delegate.get();

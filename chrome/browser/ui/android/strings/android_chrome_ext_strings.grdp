@@ -9,6 +9,19 @@
   <message name="IDS_CLOSE_TABS_ON_EXIT_SUMMARY" desc="Summary of closing tabs on exit menu item">
     Don't persist tabs between browsing sessions
   </message>
+  <!-- Referrer toggle -->
+  <message name="IDS_CROSS_ORIGIN_REFERRER_POLICY_TITLE" desc="Cross-origin referrer policy setting label">
+    Cross-origin referrer policy
+  </message>
+  <message name="IDS_CROSS_ORIGIN_REFERRER_POLICY_DEFAULT" desc="Select value">
+    Default
+  </message>
+  <message name="IDS_CROSS_ORIGIN_REFERRER_POLICY_REDUCE" desc="Select value">
+    Reduce cross-origin referrer
+  </message>
+  <message name="IDS_CROSS_ORIGIN_REFERRER_POLICY_DISABLE" desc="Select value">
+    Disable cross-origin referrer
+  </message>
   <message name="IDS_OPEN_LINKS_IN_INCOGNITO_TITLE" desc="Title of opening external links in incognito tabs menu item">
     Open external links in incognito
   </message>

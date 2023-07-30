@@ -24,5 +24,9 @@ that can be found in the LICENSE file.
         android:key="webrtc_policy"
         android:title="@string/webrtc_policy_title"
         android:fragment="org.chromium.chrome.browser.webrtc.settings.WebRtcPolicySettings"/>
+    <org.chromium.components.browser_ui.settings.ChromeBasePreference
+        android:key="cross_origin_referrer_policy"
+        android:title="@string/cross_origin_referrer_policy_title"
+        android:fragment="org.chromium.chrome.browser.referrer.settings.CrossOriginReferrerPolicySettings"/>
 </PreferenceScreen>
 

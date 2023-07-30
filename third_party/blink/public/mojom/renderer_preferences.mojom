@@ -6,6 +6,7 @@ module blink.mojom;
 
 import "mojo/public/mojom/base/string16.mojom";
 import "mojo/public/mojom/base/time.mojom";
+import "services/network/public/mojom/network_context.mojom";
 import "ui/gfx/mojom/font_render_params.mojom";
 import "third_party/blink/public/mojom/user_agent/user_agent_metadata.mojom";
 
@@ -76,6 +77,10 @@ struct RendererPreferences {
 
   // Set to false to not send referrers.
   bool enable_referrers = true;
+
+  // Configures what referrers are sent cross-origin
+  network.mojom.CrossOriginReferrerPolicy cross_origin_referrer_policy =
+      network.mojom.CrossOriginReferrerPolicy.kDefault;
 
   // Set to true to allow third-party sub-content to pop-up HTTP basic auth
   // dialog boxes.

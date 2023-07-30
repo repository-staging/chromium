@@ -1572,6 +1572,10 @@ inline constexpr char kEnableHyperlinkAuditing[] = "enable_a_ping";
 // Whether to enable sending referrers.
 inline constexpr char kEnableReferrers[] = "enable_referrers";
 
+// Preference to configure what referrers are sent cross-origin.
+inline constexpr char kCrossOriginReferrerPolicy[] =
+    "cross_origin_referrer_policy";
+ 
 // Whether to allow the use of Encrypted Media Extensions (EME), except for the
 // use of Clear Key key sytems, which is always allowed as required by the spec.
 // TODO(crbug.com/40549758): This pref was used as a WebPreference which is why

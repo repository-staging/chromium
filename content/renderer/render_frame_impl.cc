@@ -4579,6 +4579,31 @@ void RenderFrameImpl::WillSendRequestInternal(
     request.SetReferrerString(WebString());
     request.SetReferrerPolicy(network::mojom::ReferrerPolicy::kNever);
   }
+
+  // Enforce cross-origin referrer policy
+  switch (GetWebView()->GetRendererPreferences().cross_origin_referrer_policy) {
+   case network::mojom::CrossOriginReferrerPolicy::kDefault:
+      break;
+    case network::mojom::CrossOriginReferrerPolicy::kReduce: {
+      GURL referrer_url = GURL(request.ReferrerString().Utf8());
+      if (!referrer_url.is_empty() &&
+          !url::IsSameOriginWith(request.Url(), referrer_url)) {
+        auto capped_referrer = url::Origin::Create(referrer_url);
+        request.SetReferrerString(WebString::FromUTF8(capped_referrer.GetURL().spec()));
+        request.SetReferrerPolicy(network::mojom::ReferrerPolicy::kOriginWhenCrossOrigin);
+      }
+      break;
+    }
+    case network::mojom::CrossOriginReferrerPolicy::kDisable: {
+      GURL referrer_url = GURL(request.ReferrerString().Utf8());
+      if (!referrer_url.is_empty() &&
+          !url::IsSameOriginWith(request.Url(), referrer_url)) {
+        request.SetReferrerString(WebString());
+        request.SetReferrerPolicy(network::mojom::ReferrerPolicy::kSameOrigin);
+      }
+      break;
+    }
+  }
 }
 
 void RenderFrameImpl::DidLoadResourceFromMemoryCache(

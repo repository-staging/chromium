@@ -398,6 +398,29 @@ void AddAdditionalRequestHeaders(
         blink::mojom::Referrer(GURL(), network::mojom::ReferrerPolicy::kNever);
   }
 
+  // Enforce cross-origin referrer policy
+  switch (render_prefs.cross_origin_referrer_policy) {
+    case network::mojom::CrossOriginReferrerPolicy::kDefault:
+      break;
+    case network::mojom::CrossOriginReferrerPolicy::kReduce: {
+      if (!referrer->url.is_empty() &&
+          !url::IsSameOriginWith(url, referrer->url)) {
+        auto capped_referrer = url::Origin::Create(referrer->url);
+        *referrer = blink::mojom::Referrer(capped_referrer.GetURL(),
+            network::mojom::ReferrerPolicy::kOriginWhenCrossOrigin);
+      }
+      break;
+    }
+    case network::mojom::CrossOriginReferrerPolicy::kDisable: {
+      if (!referrer->url.is_empty() &&
+          !url::IsSameOriginWith(url, referrer->url)) {
+        *referrer = blink::mojom::Referrer(GURL(),
+            network::mojom::ReferrerPolicy::kSameOrigin);
+      }
+      break;
+    }
+  }
+
   // Next, set the HTTP Origin if needed.
   if (NeedsHTTPOrigin(headers, method)) {
     url::Origin origin_header_value = initiator_origin.value_or(url::Origin());
