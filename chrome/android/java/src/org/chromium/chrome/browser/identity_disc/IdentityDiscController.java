@@ -60,6 +60,9 @@ public class IdentityDiscController
                 ProfileDataCache.Observer,
                 IdentityManager.Observer,
                 ButtonDataProvider {
+
+    private static final boolean ALLOW_NTP_AVATAR = false;
+
     // Context is used for fetching resources and launching preferences page.
     private final Context mContext;
     private ActivityLifecycleDispatcher mActivityLifecycleDispatcher;
@@ -145,6 +148,11 @@ public class IdentityDiscController
     private void calculateButtonData() {
         if (!mNativeIsInitialized) {
             assert !mButtonData.canShow();
+            return;
+        }
+
+        if (!ALLOW_NTP_AVATAR) {
+            mButtonData.setCanShow(false);
             return;
         }
 
@@ -320,6 +328,10 @@ public class IdentityDiscController
     }
 
     private String getContentDescription(@Nullable String email) {
+        if (!ALLOW_NTP_AVATAR) {
+            return mContext.getString(R.string.accessibility_toolbar_btn_identity_disc);
+        }
+
         if (email == null) {
             if (SigninUtils.shouldShowNewSigninFlow()) {
                 return mContext.getString(
