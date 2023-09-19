@@ -282,3 +282,7 @@ src:*third_party/pthreadpool/src/src/portable-api.c
 ######### Uncategorized
 
 src:*native_client/*
+
+######### Downstream addition
+[cfi-unrelated-cast]
+fun:__unw_init_local
