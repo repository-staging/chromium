@@ -24,7 +24,7 @@ const base::FeatureParam<bool> kPrivacySandboxAdsNoticeCCTIncludeModeB{
 
 BASE_FEATURE(kPrivacySandboxSettings4,
              "PrivacySandboxSettings4",
-             base::FEATURE_ENABLED_BY_DEFAULT);
+             base::FEATURE_DISABLED_BY_DEFAULT);
 
 const char kPrivacySandboxSettings4ConsentRequiredName[] = "consent-required";
 const char kPrivacySandboxSettings4NoticeRequiredName[] = "notice-required";

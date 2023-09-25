@@ -291,7 +291,7 @@ BASE_FEATURE(kBoostNonRenderBlockingStyleLoadingTaskPriority,
 // Kill switch for the Topics API.
 BASE_FEATURE(kBrowsingTopics,
              "BrowsingTopics",
-             base::FEATURE_ENABLED_BY_DEFAULT);
+             base::FEATURE_DISABLED_BY_DEFAULT);
 
 // If enabled, the check for whether the IP address is publicly routable will be
 // bypassed when determining the eligibility for a page to be included in topics
@@ -307,13 +307,13 @@ BASE_FEATURE(kBrowsingTopicsBypassIPIsPubliclyRoutableCheck,
 // is enabled.)
 BASE_FEATURE(kBrowsingTopicsDocumentAPI,
              "BrowsingTopicsDocumentAPI",
-             base::FEATURE_ENABLED_BY_DEFAULT);
+             base::FEATURE_DISABLED_BY_DEFAULT);
 
 // Decoupled with the main `kBrowsingTopics` feature, so it allows us to
 // decouple the server side configs.
 BASE_FEATURE(kBrowsingTopicsParameters,
              "BrowsingTopicsParameters",
-             base::FEATURE_ENABLED_BY_DEFAULT);
+             base::FEATURE_DISABLED_BY_DEFAULT);
 // The number of epochs from where to calculate the topics to give to a
 // requesting contexts.
 const base::FeatureParam<int> kBrowsingTopicsNumberOfEpochsToExpose{
