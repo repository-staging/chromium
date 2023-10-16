@@ -16,6 +16,7 @@ import androidx.preference.PreferenceFragmentCompat;
 import org.chromium.base.version_info.VersionInfo;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.tracing.settings.DeveloperSettings;
+import org.chromium.chrome.browser.subresource_filter.RulesetUpdater;
 import org.chromium.components.browser_ui.settings.SettingsUtils;
 import org.chromium.ui.widget.Toast;
 
@@ -28,6 +29,8 @@ public class AboutChromeSettings extends PreferenceFragmentCompat
 
     private static final String PREF_APPLICATION_VERSION = "application_version";
     private static final String PREF_OS_VERSION = "os_version";
+    private static final String PREF_SUBRESOURCE_FILTER_RULES_VERSION =
+            "subresource_filter_rules_version";
     private static final String PREF_LEGAL_INFORMATION = "legal_information";
 
     // Non-translated strings:
@@ -52,6 +55,12 @@ public class AboutChromeSettings extends PreferenceFragmentCompat
         p.setSummary(
                 getApplicationVersion(getActivity(), AboutSettingsBridge.getApplicationVersion()));
         p.setOnPreferenceClickListener(this);
+        p = findPreference(PREF_SUBRESOURCE_FILTER_RULES_VERSION);
+        final String subresourceFilterRulesVersion = RulesetUpdater.version();
+        if (!subresourceFilterRulesVersion.equals("")) {
+            p.setSummary(subresourceFilterRulesVersion);
+            p.setVisible(true);
+        }
         p = findPreference(PREF_OS_VERSION);
         p.setSummary(AboutSettingsBridge.getOSVersion());
         p = findPreference(PREF_LEGAL_INFORMATION);

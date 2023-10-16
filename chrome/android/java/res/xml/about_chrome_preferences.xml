@@ -5,10 +5,16 @@ Use of this source code is governed by a BSD-style license that can be
 found in the LICENSE file.
 -->
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <org.chromium.chrome.browser.about_settings.LongClickCopySummaryPreference
         android:key="application_version"
         android:title="@string/application_version_title" />
+    <org.chromium.chrome.browser.about_settings.LongClickCopySummaryPreference
+        android:key="subresource_filter_rules_version"
+        android:title="@string/subresource_filter_rules_version_title"
+        app:isPreferenceVisible="false" />
     <org.chromium.chrome.browser.about_settings.AboutChromePreferenceOSVersion
         android:key="os_version"
         android:title="@string/os_version_title" />

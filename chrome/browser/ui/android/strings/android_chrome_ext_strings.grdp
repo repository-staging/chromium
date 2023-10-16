@@ -28,6 +28,9 @@
   <message name="IDS_OPEN_LINKS_IN_INCOGNITO_SUMMARY" desc="Summary of opening external links in incognito tabs menu item">
     Open links navigated by external apps in incognito tabs
   </message>
+  <message name="IDS_SUBRESOURCE_FILTER_RULES_VERSION_TITLE" desc="Title of subresource filter rules version menu item">
+    Subresource filter rules version
+  </message>
   <!-- WebRTC toggle -->
   <message name="IDS_WEBRTC_POLICY_TITLE" desc="WebRTC policy setting label">
     WebRTC IP handling policy
