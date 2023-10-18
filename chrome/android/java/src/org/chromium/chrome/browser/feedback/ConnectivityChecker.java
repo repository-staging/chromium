@@ -33,9 +33,9 @@ public final class ConnectivityChecker {
     private static final String TAG = "feedback";
 
     private static final String DEFAULT_HTTP_NO_CONTENT_URL =
-            "http://clients4.google.com/generate_204";
+            "http://connectivitycheck.grapheneos.network/generate_204";
     private static final String DEFAULT_HTTPS_NO_CONTENT_URL =
-            "https://clients4.google.com/generate_204";
+            "https://connectivitycheck.grapheneos.network/generate_204";
 
     private static String sHttpNoContentUrl = DEFAULT_HTTP_NO_CONTENT_URL;
     private static String sHttpsNoContentUrl = DEFAULT_HTTPS_NO_CONTENT_URL;
