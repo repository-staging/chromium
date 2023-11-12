@@ -492,6 +492,35 @@ blink::UserAgentMetadata GetUserAgentMetadata(const PrefService* pref_service,
                : metadata;
   }
 
+  if (base::FeatureList::IsEnabled(
+          blink::features::kClientHintsLowEntropyOnly)) {
+    return metadata;
+  }
+
+  if (base::FeatureList::IsEnabled(
+          blink::features::kClientHintsFromReducedUA)) {
+    // Values reflected from reduced user agent obtained from
+    // GetReducedUserAgent from //content/common/user_agent.cc
+    std::string reduced_version_number =
+        base::StrCat({version_info::GetMajorVersionNumber(), ".0.",
+                      blink::features::kUserAgentFrozenBuildVersion.Get(), ".0"});
+    // See GetFormFactorsForClientHints. Do not include XR Form Factor.
+    // By default, use "Mobile" or "Desktop" depending on the `mobile` bit.
+    std::vector<std::string> form_factors = {
+        metadata.mobile ? blink::kMobileFormFactor : blink::kDesktopFormFactor};
+    metadata.brand_full_version_list =
+        GetUserAgentBrandList(version_info::GetMajorVersionNumber(),
+                              enable_updated_grease_by_policy,
+                              reduced_version_number,
+                              blink::UserAgentBrandVersionType::kFullVersion);
+    // Only based on low-entropy client hints for mobile, keep the same logic.
+    metadata.form_factors = form_factors;
+    metadata.model = "K";
+    metadata.platform_version = "10.0.0";
+    metadata.full_version = reduced_version_number;
+    return metadata;
+  }
+
   if (only_low_entropy_ch) {
     return metadata;
   }

@@ -456,6 +456,16 @@ BASE_FEATURE(kCheckHTMLParserBudgetLessOften,
              "CheckHTMLParserBudgetLessOften",
              base::FEATURE_DISABLED_BY_DEFAULT);
 
+// Enable low-entropy client hints only.
+BASE_FEATURE(kClientHintsLowEntropyOnly,
+             "ClientHintsLowEntropyOnly",
+             base::FEATURE_DISABLED_BY_DEFAULT);
+
+// Use information from reduced user agent for high entropy client hints.
+BASE_FEATURE(kClientHintsFromReducedUA,
+            "ClientHintsFromReducedUA",
+            base::FEATURE_ENABLED_BY_DEFAULT);
+
 // Enable `sec-ch-dpr` client hint.
 BASE_FEATURE(kClientHintsDPR,
              "ClientHintsDPR",

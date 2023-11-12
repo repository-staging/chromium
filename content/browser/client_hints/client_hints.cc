@@ -867,6 +867,20 @@ void AddRequestClientHintsHeaders(
 
   GURL url = origin.GetURL();
 
+  if (base::FeatureList::IsEnabled(
+          blink::features::kClientHintsLowEntropyOnly)) {
+    return;
+  }
+
+  if (base::FeatureList::IsEnabled(
+          blink::features::kClientHintsFromReducedUA)) {
+    UpdateNavigationRequestClientUaHeadersImpl(
+        delegate, is_ua_override_on, frame_tree_node,
+        ClientUaHeaderCallType::kDuringCreation, headers, container_policy,
+        request_url, data);
+    return;
+  }
+
   // Add Headers
   if (ShouldAddClientHint(data, WebClientHintsType::kDeviceMemory_DEPRECATED)) {
     AddDeviceMemoryHeader(headers, /*use_deprecated_version*/ true);
