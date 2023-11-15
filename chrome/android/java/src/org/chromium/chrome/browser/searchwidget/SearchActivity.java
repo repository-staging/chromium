@@ -370,6 +370,7 @@ public class SearchActivity extends AsyncInitializationActivity
         mLocationBarCoordinator.setUrlBarFocusable(true);
         mLocationBarCoordinator.setShouldShowMicButtonWhenUnfocused(true);
         mLocationBarCoordinator.getOmniboxStub().addUrlFocusChangeListener(this);
+        SearchActivityHooks.modifyLocationBarCoordinatorBehavior(mLocationBarCoordinator);
 
         // Kick off everything needed for the user to type into the box.
         handleNewIntent(getIntent(), false);

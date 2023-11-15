@@ -831,4 +831,8 @@ public class LocationBarCoordinator
     public @NonNull Optional<OmniboxSuggestionsVisualState> getOmniboxSuggestionsVisualState() {
         return Optional.of(mAutocompleteCoordinator);
     }
+
+    public void setShouldClearOmniboxByDefault(boolean shouldClear) {
+        mLocationBarMediator.setShouldClearOmniboxByDefault(shouldClear);
+    }
 }

@@ -208,6 +208,19 @@ class LocationBarMediator
     private ObservableSupplierImpl<Boolean> mBackPressStateSupplier =
             new ObservableSupplierImpl<>();
     private boolean mShouldClearOmniboxOnFocus = true;
+    private boolean mShouldClearOmniboxOnFocusByDefault = true;
+    private volatile boolean mShouldClearOmniboxOnFocusByDefaultSet = false;
+
+    void setShouldClearOmniboxByDefault(boolean shouldClear) {
+        if (mShouldClearOmniboxOnFocusByDefaultSet) {
+            return;
+        }
+
+        mShouldClearOmniboxOnFocus = shouldClear;
+        mShouldClearOmniboxOnFocusByDefault = shouldClear;
+        mShouldClearOmniboxOnFocusByDefaultSet = true;
+    }
+
     private ObservableSupplier<TabModelSelector> mTabModelSelectorSupplier;
     private SearchEngineUtils mSearchEngineUtils;
 
@@ -759,7 +772,7 @@ class LocationBarMediator
                             mLocationBarLayout.getMeasuredWidth(), MeasureSpec.EXACTLY));
         }
         // Reset to the default value.
-        mShouldClearOmniboxOnFocus = true;
+        mShouldClearOmniboxOnFocus = mShouldClearOmniboxOnFocusByDefault;
     }
 
     /**
