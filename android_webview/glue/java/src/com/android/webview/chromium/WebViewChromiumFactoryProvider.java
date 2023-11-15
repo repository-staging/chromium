@@ -43,6 +43,7 @@ import org.chromium.android_webview.BrowserSafeModeActionList;
 import org.chromium.android_webview.ProductConfig;
 import org.chromium.android_webview.R;
 import org.chromium.android_webview.WebViewChromiumRunQueue;
+import org.chromium.android_webview.common.AlwaysOverridenFlagList;
 import org.chromium.android_webview.common.AwSwitches;
 import org.chromium.android_webview.common.CommandLineUtil;
 import org.chromium.android_webview.common.DeveloperModeUtils;
@@ -463,6 +464,8 @@ public class WebViewChromiumFactoryProvider implements WebViewFactoryProvider {
                             "Android.WebView.DevUi.FlagLoadingBlockingTime", end - start);
                 }
             }
+
+            AlwaysOverridenFlagList.applyFlagOverrides(flagOverrides);
 
             ThreadUtils.setWillOverrideUiThread();
             BuildInfo.setBrowserPackageInfo(packageInfo);
