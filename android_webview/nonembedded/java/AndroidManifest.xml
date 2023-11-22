@@ -38,6 +38,7 @@ by a child template that "extends" this file.
                  android:icon="@{{manifest_package|default('com.android.webview')}}:drawable/icon_webview"
                  android:name="{{ application_name|default('org.chromium.android_webview.nonembedded.WebViewApkApplication') }}"
                  android:multiArch="true"
+                 android:memtagMode="async"
                  android:extractNativeLibs="false">
         {# This part is shared between stand-alone WebView and Monochrome #}
         {% macro common(manifest_package, webview_lib) %}
