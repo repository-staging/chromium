@@ -997,13 +997,15 @@ void PartitionAllocSupport::ReconfigureAfterFeatureListInit(
           base::features::kKillPartitionAllocMemoryTagging)) {
     // If synchronous mode is enabled from startup it means this is a test and
     // memory tagging should be enabled.
-    if (partition_alloc::internal::GetMemoryTaggingModeForCurrentThread() ==
-        partition_alloc::TagViolationReportingMode::kSynchronous) {
+    auto cur_memtag_mode = partition_alloc::internal::GetMemoryTaggingModeForCurrentThread();
+    if (cur_memtag_mode == partition_alloc::TagViolationReportingMode::kSynchronous) {
       enable_memory_tagging = true;
       memory_tagging_reporting_mode =
           partition_alloc::TagViolationReportingMode::kSynchronous;
     } else {
-      enable_memory_tagging = ShouldEnableMemoryTagging(process_type);
+      enable_memory_tagging = ShouldEnableMemoryTagging(process_type) &&
+          // memory tagging can't be re-enabled
+          cur_memtag_mode != partition_alloc::TagViolationReportingMode::kDisabled;
 #if BUILDFLAG(IS_ANDROID)
       if (enable_memory_tagging) {
         switch (base::features::kMemtagModeParam.Get()) {
