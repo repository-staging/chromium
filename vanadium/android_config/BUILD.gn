@@ -1,0 +1,21 @@
+# Copyright 2023 The Chromium Authors
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+import("//build/config/android/channel.gni")
+import("//build/config/android/config.gni")
+import("//build/config/android/rules.gni")
+import("//vanadium/android_config/config_apk.gni")
+
+assert(is_android)
+
+config_apk_tmpl("vanadium_config_apk") {
+  apk_name = "VanadiumConfig"
+  application_label = "Vanadium Config"
+}
+
+config_apk_tmpl("vanadium_config_for_testing_apk") {
+  testonly = true
+  apk_name = "VanadiumConfigTest"
+  application_label = "Vanadium Config Test"
+}
