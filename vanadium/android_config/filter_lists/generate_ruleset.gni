@@ -1,0 +1,55 @@
+# Copyright 2023 The Chromium Authors
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+import("//build/compiled_action.gni")
+import("//build/config/android/rules.gni")
+
+assert(is_android)
+
+template("generate_unindexed_ruleset_assets") {
+  assert(defined(invoker.inputs), "Cannot have empty list for generate unindexed rulesets assets from filter lists")
+  assert(defined(invoker.asset_file_name), "Cannot have empty file name defined for asset")
+  _compiled_action_target_name = "${target_name}__compile_from_filter_list__"
+
+  compiled_action(_compiled_action_target_name) {
+    tool = "//components/subresource_filter/tools:ruleset_converter"
+
+    outputs = [
+      "$root_out_dir/${invoker.asset_file_name}",
+    ]
+
+    inputs = invoker.inputs
+
+    deps = [
+      "//components/subresource_filter/tools:ruleset_converter",
+    ]
+    rebased_input_files = []
+    foreach(input_file, inputs) {
+      rebased_input_files += [
+        rebase_path(input_file, root_build_dir),
+      ]
+    }
+
+
+    args = [
+      "--input_format=filter-list",
+      "--output_format=unindexed-ruleset",
+      "--input_files=" + string_join(",", rebased_input_files),
+      "--output_file=" + rebase_path(outputs[0], root_build_dir),
+    ]
+  }
+
+  android_assets(target_name) {
+    disable_compression = true
+    renaming_sources = [
+      "$root_out_dir/${invoker.asset_file_name}",
+    ]
+    renaming_destinations = [
+      "../${invoker.asset_file_name}",
+    ]
+    deps = [
+      ":${_compiled_action_target_name}",
+    ]
+  }
+}

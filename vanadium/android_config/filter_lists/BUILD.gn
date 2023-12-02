@@ -1,0 +1,17 @@
+# Copyright 2023 The Chromium Authors
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+import("//build/compiled_action.gni")
+import("//build/config/android/rules.gni")
+import("generate_ruleset.gni")
+
+assert(is_android)
+
+generate_unindexed_ruleset_assets("ruleset_assets") {
+  inputs = [
+    "//vanadium/android_config/filter_lists/filter_lists.txt",
+  ]
+
+  asset_file_name = "unindexed_ruleset"
+}
