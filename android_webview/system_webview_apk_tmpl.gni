@@ -231,6 +231,15 @@ template("system_webview_apk_or_module_tmpl") {
       }
     }
 
+    if (!_omit_dex) {
+      if (!defined(srcjar_deps)) {
+        srcjar_deps = []
+      }
+      srcjar_deps += [
+        "//vanadium/android_config:configinfo_srcjar_apk",
+      ]
+    }
+
     if (_include_primary_support) {
       deps += [
         "//android_webview:webview_primary_abi_assets",
