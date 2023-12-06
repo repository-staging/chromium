@@ -94,3 +94,27 @@ template("config_apk_tmpl") {
     forward_variables_from(invoker, TESTONLY_AND_VISIBILITY)
   }
 }
+
+template("generate_configinfo_srcjar") {
+  java_cpp_template(target_name) {
+    forward_variables_from(invoker, TESTONLY_AND_VISIBILITY)
+    sources = [ "//vanadium/android_config/java/templates/ConfigInfo.template" ]
+    defines = []
+    deps = []
+    if (defined(invoker.deps)) {
+      deps += invoker.deps
+    }
+    if (invoker.use_final_fields) {
+      defines += [
+        "USE_FINAL",
+        "_CONFIG_APK_PACKAGE=${config_apk_package}",
+        "_CONFIG_APK_CERTDIGEST=${config_apk_certdigest}",
+      ]
+      if (config_apk_is_debug) {
+        defines += [
+          "_IS_DEBUG",
+        ]
+      }
+    }
+  }
+}
