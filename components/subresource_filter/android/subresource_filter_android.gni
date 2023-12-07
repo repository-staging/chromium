@@ -6,12 +6,15 @@ subresource_filter_android_cc_sources = [
 ]
 
 subresource_filter_android_cc_deps = [
+  "//components/subresource_filter/android_config:android",
+  "//components/subresource_filter/android_config:subresource_filter_fetching_jni_headers",
 ]
 
 subresource_filter_android_java_sources = [
 ]
 
 subresource_filter_android_java_deps = [
+  "//components/subresource_filter/android_config:java",
 ]
 
 subresource_filter_android_java_srcjar_deps = [

@@ -28,6 +28,9 @@
 #include "base/trace_event/traced_value.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
+#if BUILDFLAG(IS_ANDROID)
+#include "components/subresource_filter/android_config/subresource_filter_fetching.h"
+#endif // BUILDFLAG(IS_ANDROID)
 #include "components/subresource_filter/content/shared/browser/ruleset_publisher.h"
 #include "components/subresource_filter/content/shared/browser/unindexed_ruleset_stream_generator.h"
 #include "components/subresource_filter/core/browser/copying_file_stream.h"
@@ -247,7 +250,12 @@ void RulesetService::IndexAndStoreAndPublishRulesetIfNeeded(
   if (most_recently_indexed_version.IsCurrentFormatVersion() &&
       most_recently_indexed_version.content_version ==
           unindexed_ruleset_info.content_version) {
+#if BUILDFLAG(IS_ANDROID)
+    if (!subresource_filter::IsInitializedFromConfig())
+      return;
+#else
     return;
+#endif // BUILDFLAG(IS_ANDROID)
   }
 
   // Before initialization, retain information about the most recently supplied
@@ -471,6 +479,9 @@ void RulesetService::OnWrittenRuleset(WriteRulesetCallback result_callback,
     return;
   version.SaveToPrefs(local_state_);
   std::move(result_callback).Run(version);
+#if BUILDFLAG(IS_ANDROID)
+  subresource_filter::DeleteUnindexedFile();
+#endif // BUILDFLAG(IS_ANDROID)
 }
 
 void RulesetService::OpenAndPublishRuleset(
