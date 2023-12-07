@@ -1,0 +1,36 @@
+# Copyright 2020 The Chromium Authors
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+import("//build/config/android/rules.gni")
+import("//third_party/jni_zero/jni_zero.gni")
+
+generate_jni("subresource_filter_fetching_jni_headers") {
+  sources = [
+    "java/src/org/chromium/components/subresource_filter/SubresourceFilterFetching.java",
+  ]
+}
+
+android_library("java") {
+  srcjar_deps = [ ":subresource_filter_fetching_jni_headers" ]
+  sources = [
+    "java/src/org/chromium/components/subresource_filter/SubresourceFilterFetching.java",
+  ]
+  deps = [
+    ":subresource_filter_fetching_jni_headers",
+    "//base:base_java",
+    "//third_party/jni_zero:jni_zero_java",
+    "//vanadium/android_config/proto:browser_config_parser_java",
+  ]
+}
+
+source_set("android") {
+  sources = [
+    "subresource_filter_fetching.cc",
+    "subresource_filter_fetching.h",
+  ]
+  deps = [
+    ":subresource_filter_fetching_jni_headers",
+    "//base",
+  ]
+}
