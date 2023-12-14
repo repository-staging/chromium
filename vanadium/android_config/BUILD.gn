@@ -12,6 +12,10 @@ assert(is_android)
 config_apk_tmpl("vanadium_config_apk") {
   apk_name = "VanadiumConfig"
   application_label = "Vanadium Config"
+  deps = [
+    "filter_lists:ruleset_assets",
+    "proto:config_assets",
+  ]
 }
 
 config_apk_tmpl("vanadium_config_for_testing_apk") {
