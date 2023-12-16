@@ -56,6 +56,8 @@ final class PrivacySettingsExt {
                 prefFragment, PrivacySettings.PREF_SYNC_AND_SERVICES_LINK);
         SettingsExtUtils.safelyRemovePreference(
                 prefFragment, PrivacySettings.PREF_PRIVACY_SANDBOX);
+        SettingsExtUtils.safelyRemovePreference(
+                prefFragment, PrivacySettings.PREF_PRIVACY_GUIDE);
     }
 
     static void initializePreferences(@NonNull PreferenceFragmentCompat prefFragment, @NonNull Profile profile) {
