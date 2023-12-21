@@ -1,0 +1,12 @@
+# Copyright 2023 GrapheneOS
+# Use of this source code is governed by a GPL-2.0 style license that can be
+# found in the LICENSE file.
+
+import("//build/config/android/rules.gni")
+
+proto_java_library("config_proto_java") {
+  proto_path = "//vanadium/android_config/proto"
+  sources = [
+    "$proto_path/config.proto",
+  ]
+}
