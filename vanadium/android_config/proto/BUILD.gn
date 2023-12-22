@@ -10,3 +10,44 @@ proto_java_library("config_proto_java") {
     "$proto_path/config.proto",
   ]
 }
+
+java_binary("config_generator_java") {
+  sources = [
+    "java/src_host/app/vanadium/config/host/ConfigGenerator.java",
+  ]
+  deps = [
+    ":config_proto_java",
+    "//third_party/android_deps:com_google_protobuf_protobuf_javalite_java",
+  ]
+  # Needed to be able to compile this as a java binary with python script wrapper, for pb2 generation
+  bypass_platform_checks = true
+  main_class = "app.vanadium.config.host.ConfigGenerator"
+  wrapper_script_name = "android_config_apk/config_apk_generator.py"
+}
+
+java_binary("config_parser_java") {
+  sources = [
+    "java/src_host/app/vanadium/config/host/ConfigParser.java",
+  ]
+  deps = [
+    ":config_proto_java",
+    "//third_party/android_deps:com_google_protobuf_protobuf_javalite_java",
+  ]
+  # Needed to be able to compile this as a java binary with python script wrapper, for pb2 generation
+  bypass_platform_checks = true
+  main_class = "app.vanadium.config.host.ConfigParser"
+  wrapper_script_name = "android_config_apk/config_apk_parser.py"
+}
+
+action("config_generation") {
+  script = "$root_out_dir/bin/android_config_apk/config_apk_generator.py"
+  args = [
+    "--out_file=" + rebase_path("$root_out_dir/proto_config.pb2", root_build_dir)
+  ]
+  outputs = [
+    "$root_out_dir/proto_config.pb2",
+  ]
+  deps = [
+    ":config_generator_java",
+  ]
+}
