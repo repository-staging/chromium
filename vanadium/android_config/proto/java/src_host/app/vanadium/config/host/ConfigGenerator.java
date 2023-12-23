@@ -25,6 +25,16 @@ public class ConfigGenerator {
 
     private static final Configs getConfigs() {
         List<Config> configList = new ArrayList<>();
+        configList.add(config(configParams -> configParams.setSpec(
+                spec(specParams -> specParams.setSpecTypes(getSpecTypes(SpecType.BROWSER))
+                ))
+                .addAllComponents(components(
+                        component(componentParams -> componentParams.setComponentType(ComponentType.SUBRESOURCE_FILTER_TOOLS)
+                                .setComponentFileName("unindexed_ruleset")
+                                .setVersionCode(1L)
+                        )
+                ))
+        ));
         return sortConfigs(configList);
     }
 
