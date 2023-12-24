@@ -1,0 +1,10 @@
+# Copyright 2023 The Chromium Authors
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+assert(is_android)
+# An group included in //BUILD.gn to make vanadium build target files reachable by GN.
+group("vanadium_build_targets") {
+  deps = [
+  ]
+}

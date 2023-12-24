@@ -426,6 +426,10 @@ group("gn_all") {
       if (enable_chrome_android_internal) {
         deps += [ "//clank" ]
       }
+
+      deps += [
+        "//vanadium:vanadium_build_targets",
+      ]
     }
 
     if (is_linux || is_chromeos || is_android) {
