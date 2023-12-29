@@ -3,6 +3,7 @@
 # found in the LICENSE file.
 
 chrome_ext_deps = [
+  "//chrome/browser/subresource_filter/android:java",
 ]
 
 chrome_ext_srcjar_deps = [

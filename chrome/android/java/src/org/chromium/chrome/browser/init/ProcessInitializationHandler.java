@@ -92,6 +92,7 @@ import org.chromium.chrome.browser.quickactionsearchwidget.QuickActionSearchWidg
 import org.chromium.chrome.browser.rlz.RevenueStats;
 import org.chromium.chrome.browser.searchwidget.SearchWidgetProvider;
 import org.chromium.chrome.browser.signin.SigninCheckerProvider;
+import org.chromium.chrome.browser.subresource_filter.RulesetUpdater;
 import org.chromium.chrome.browser.tab.state.PersistedTabData;
 import org.chromium.chrome.browser.tab.state.ShoppingPersistedTabData;
 import org.chromium.chrome.browser.tabmodel.TabPersistentStore;
@@ -697,6 +698,7 @@ public class ProcessInitializationHandler {
         // Asynchronously query system accessibility state so it is ready for clients.
         tasks.add(AccessibilityState::initializeOnStartup);
         tasks.add(TabPersistentStore::onDeferredStartup);
+        tasks.add(RulesetUpdater::init);
     }
 
     /**
