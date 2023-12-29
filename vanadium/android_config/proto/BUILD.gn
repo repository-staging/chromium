@@ -51,3 +51,13 @@ action("config_generation") {
     ":config_generator_java",
   ]
 }
+
+android_library("browser_config_parser_java") {
+  sources = [
+    "java/src/app/vanadium/config/VanadiumConfParser.java",
+  ]
+  deps = [
+    ":config_proto_java",
+    "//vanadium/android_config:configinfo_java",
+  ]
+}
