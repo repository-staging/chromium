@@ -61,3 +61,16 @@ android_library("browser_config_parser_java") {
     "//vanadium/android_config:configinfo_java",
   ]
 }
+
+android_assets("config_assets") {
+  disable_compression = true
+  renaming_sources = [
+    "$root_out_dir/proto_config.pb2",
+  ]
+  renaming_destinations = [
+    "../proto_config.pb2"
+  ]
+  deps = [
+    ":config_generation"
+  ]
+}
