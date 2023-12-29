@@ -53,6 +53,7 @@ assert(enable_supervised_users)
 if (is_android) {
   import("//build/config/android/rules.gni")
   import("//chrome/android/features/dev_ui/dev_ui_module.gni")
+  import("//chrome/browser/static_library_browser_deps.gni")
 }
 
 if (is_win) {
@@ -3434,6 +3435,8 @@ static_library("browser") {
     # Any circular includes must depend on the target
     # "browser_public_dependencies".
     allow_circular_includes_from += [ "//chrome/browser/facilitated_payments" ]
+
+    deps += static_library_browser_deps
 
     if (safe_browsing_mode == 2) {
       sources += [

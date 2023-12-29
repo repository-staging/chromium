@@ -1,0 +1,8 @@
+# Copyright 2023 GrapheneOS
+# Use of this source code is governed by a GPL-2.0-only-style license that can be
+# found in the LICENSE file.
+
+assert(is_android)
+
+static_library_browser_deps = [
+]
