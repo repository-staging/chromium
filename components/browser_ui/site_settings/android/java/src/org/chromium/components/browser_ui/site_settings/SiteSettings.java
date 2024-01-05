@@ -147,8 +147,6 @@ public class SiteSettings extends BaseSiteSettingsFragment
                 p.setSummary(ContentSettingsResources.getGeolocationAllowedSummary());
             } else if (Type.CLIPBOARD == prefCategory && !checked) {
                 p.setSummary(ContentSettingsResources.getClipboardBlockedListSummary());
-            } else if (Type.ADS == prefCategory && !checked) {
-                p.setSummary(ContentSettingsResources.getAdsBlockedListSummary());
             } else if (Type.SOUND == prefCategory && !checked) {
                 p.setSummary(ContentSettingsResources.getSoundBlockedListSummary());
             } else if (Type.REQUEST_DESKTOP_SITE == prefCategory) {

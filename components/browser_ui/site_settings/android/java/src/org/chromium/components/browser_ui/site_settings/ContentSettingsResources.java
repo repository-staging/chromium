@@ -102,12 +102,12 @@ public class ContentSettingsResources {
             case ContentSettingsType.ADS:
                 return new ResourceItem(
                         R.drawable.web_asset,
-                        R.string.site_settings_page_intrusive_ads_label,
+                        R.string.ads_permission_title,
                         ContentSettingValues.ALLOW,
                         ContentSettingValues.BLOCK,
-                        R.string.site_settings_page_intrusive_allowed_sub_label,
-                        R.string.site_settings_page_intrusive_blocked_sub_label,
-                        R.string.site_settings_page_intrusive_ads_a11y);
+                        0,
+                        0,
+                        0);
 
             case ContentSettingsType.ANTI_ABUSE:
                 return new ResourceItem(

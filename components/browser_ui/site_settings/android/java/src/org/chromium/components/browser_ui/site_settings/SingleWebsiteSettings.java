@@ -1003,10 +1003,8 @@ public class SingleWebsiteSettings extends BaseSiteSettingsFragment
                                 mSite.getAddress().getOrigin())
                         && findPreference(getPreferenceKey(ContentSettingsType.ADS)) != null;
 
-        if (!adBlockingActivated) {
-            removePreferenceSafely(PREF_INTRUSIVE_ADS_INFO);
-            removePreferenceSafely(PREF_INTRUSIVE_ADS_INFO_DIVIDER);
-        }
+        removePreferenceSafely(PREF_INTRUSIVE_ADS_INFO);
+        removePreferenceSafely(PREF_INTRUSIVE_ADS_INFO_DIVIDER);
     }
 
     private SiteSettingsCategory getWarningCategory() {

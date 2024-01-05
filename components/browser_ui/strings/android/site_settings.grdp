@@ -16,6 +16,9 @@
   <message name="IDS_ALL_SITES" desc='Title of the "All sites" settings screen that allows the user to see permissions for all websites. [CHAR_LIMIT=32]'>
     All sites
   </message>
+  <message name="IDS_ADS_PERMISSION_TITLE" desc="Title for the ads permission [CHAR_LIMIT=32]">
+    Ads
+  </message>
   <message name="IDS_ANTI_ABUSE_PERMISSION_TITLE" desc="Title for the anti-abuse permission [CHAR_LIMIT=32]">
     Auto-verify
   </message>
