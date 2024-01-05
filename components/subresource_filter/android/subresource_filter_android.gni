@@ -1,0 +1,21 @@
+# Copyright 2023 GrapheneOS
+# Use of this source code is governed by a GPL-2.0 style license that can be
+# found in the LICENSE file.
+
+subresource_filter_android_cc_sources = [
+]
+
+subresource_filter_android_cc_deps = [
+]
+
+subresource_filter_android_java_sources = [
+]
+
+subresource_filter_android_java_deps = [
+]
+
+subresource_filter_android_java_srcjar_deps = [
+]
+
+subresource_filter_android_java_resources_deps = [
+]
