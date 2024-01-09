@@ -445,6 +445,7 @@ public class LibraryLoader {
                             mLibraryProcessType, type));
         }
         mLibraryProcessType = type;
+        LibraryLoaderHooks.onSetLibraryProcessType(ContextUtils.getApplicationContext(), type);
     }
 
     /**
@@ -782,6 +783,13 @@ public class LibraryLoader {
     @GuardedBy("mLock")
     private void ensureCommandLineSwitchedAlreadyLocked() {
         assert isMainDexLoaded();
+
+        if (!mCommandLineSwitched) {
+            LibraryLoaderHooks.onBeforeCommandLineSwitchLocked(ContextUtils.getApplicationContext(), mLibraryProcessType);
+        } else {
+            LibraryLoaderHooks.onSubsequentCommandLineSwitchLockedCheck(ContextUtils.getApplicationContext(), mLibraryProcessType);
+        }
+
         if (mCommandLineSwitched) {
             return;
         }
