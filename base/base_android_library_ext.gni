@@ -1,0 +1,21 @@
+# Copyright 2023 GrapheneOS
+# Use of this source code is governed by a GPLv2 only-style license that can be
+# found in the LICENSE file.
+
+base_java_ext_java_sources = [
+]
+
+base_java_ext_deps = [
+]
+
+base_java_ext_srcjar_deps = [
+]
+
+base_library_loader_java_ext_java_sources = [
+]
+
+base_library_loader_java_ext_deps = [
+]
+
+base_library_loader_java_ext_srcjar_deps = [
+]

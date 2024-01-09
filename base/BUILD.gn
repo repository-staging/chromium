@@ -4469,6 +4469,12 @@ if (is_android) {
       ":time_utils_java",
       ":unowned_user_data_java",
     ]
+
+    import("base_android_library_ext.gni")
+    sources += base_java_ext_java_sources
+    deps += base_java_ext_deps
+    srcjar_deps += base_java_ext_srcjar_deps
+
     if (!is_cronet_build) {
       proguard_configs += [
         "android/proguard/chromium_apk.flags",
@@ -4867,6 +4873,11 @@ if (is_android) {
       "//third_party/androidx:androidx_annotation_annotation_java",
       "//third_party/jni_zero:jni_zero_java",
     ]
+
+    import("base_android_library_ext.gni")
+    sources += base_library_loader_java_ext_java_sources
+    deps += base_library_loader_java_ext_deps
+    srcjar_deps += base_library_loader_java_ext_srcjar_deps
   }
 
   android_library("base_shared_preferences_java") {
