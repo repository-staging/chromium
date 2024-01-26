@@ -719,7 +719,7 @@ BASE_FEATURE(kDiscardInputEventsToRecentlyMovedFrames,
 
 BASE_FEATURE(kDisableThirdPartyStoragePartitioningDeprecationTrial2,
              "DisableThirdPartyStoragePartitioningDeprecationTrial2",
-             base::FEATURE_ENABLED_BY_DEFAULT);
+             base::FEATURE_DISABLED_BY_DEFAULT);
 
 // Kill switch for not WebGL DrawingBuffer using SharedImage without
 // GpuMemoryBuffer (overlay or low latency canvas).
