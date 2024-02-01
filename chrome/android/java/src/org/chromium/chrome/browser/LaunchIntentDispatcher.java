@@ -271,6 +271,7 @@ public class LaunchIntentDispatcher {
         newIntent.setAction(Intent.ACTION_VIEW);
         newIntent.setData(uri);
         newIntent.setClassName(context, CustomTabActivity.class.getName());
+        newIntent = LaunchIntentDispatcherHooks.maybeModifyCustomTabIntents(context, newIntent);
         // Make sure the result of the CustomTabActivity is forwarded to the client.
         newIntent.addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
 
