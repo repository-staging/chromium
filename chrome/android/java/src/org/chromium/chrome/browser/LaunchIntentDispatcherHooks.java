@@ -35,4 +35,10 @@ final class LaunchIntentDispatcherHooks {
 
         return newIntent;
     }
+
+    static Intent maybeModifyActionSendIntents(Activity activity, Intent intent) {
+        Intent newIntent = maybeCreateIncognitoTabIntentFor(activity, intent);
+
+        return newIntent;
+    }
 }

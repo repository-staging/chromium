@@ -150,6 +150,11 @@ public class LaunchIntentDispatcher {
         boolean incognito =
                 mIntent.getBooleanExtra(IntentHandler.EXTRA_OPEN_NEW_INCOGNITO_TAB, false);
 
+        if (Intent.ACTION_SEND.equals(mIntent.getAction())
+                && "text/plain".equals(mIntent.getType())) {
+            mIntent = LaunchIntentDispatcherHooks.maybeModifyActionSendIntents(mActivity, mIntent);
+        }
+
         String url = IntentHandler.getUrlFromIntent(mIntent);
 
         // Check if a web search Intent is being handled.
