@@ -465,13 +465,17 @@ public class SearchActivity extends AsyncInitializationActivity
                     @Nullable
                     @Override
                     protected OTRProfileID createOffTheRecordProfileID() {
+                        if (SearchActivityHooks.shouldOpenInIncognito(getIntent())) {
+                            return super.createOffTheRecordProfileID();
+                        }
                         throw new IllegalStateException(
                                 "Attempting to access incognito from the search activity");
                     }
                 };
         profileProvider.onAvailable(
                 (provider) -> {
-                    mProfileSupplier.set(profileProvider.get().getOriginalProfile());
+                    mProfileSupplier.set(ProfileProvider.getOrCreateProfile(profileProvider.get(),
+                            SearchActivityHooks.shouldOpenInIncognito(getIntent())));
                 });
         return profileProvider;
     }

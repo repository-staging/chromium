@@ -225,6 +225,8 @@ public class LaunchIntentDispatcher {
             searchActivityIntent.setClass(
                     ContextUtils.getApplicationContext(), SearchActivity.class);
             searchActivityIntent.putExtra(SearchManager.QUERY, query);
+            searchActivityIntent = LaunchIntentDispatcherHooks.maybeModifySearchIntents(
+                    mActivity, searchActivityIntent);
             mActivity.startActivity(searchActivityIntent);
         }
         return true;
