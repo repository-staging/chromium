@@ -789,5 +789,11 @@ template("chrome_public_test_apk_tmpl") {
     target_type = "instrumentation_test_apk"
     forward_variables_from(invoker, TESTONLY_AND_VISIBILITY)
     forward_variables_from(invoker, "*", TESTONLY_AND_VISIBILITY)
+    if (!defined(srcjar_deps)) {
+      srcjar_deps = []
+    }
+    srcjar_deps += [
+      "//vanadium/android_config:configinfo_srcjar_apk",
+    ]
   }
 }
