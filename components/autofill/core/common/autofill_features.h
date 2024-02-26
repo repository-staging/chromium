@@ -317,7 +317,7 @@ inline constexpr base::FeatureParam<VirtualViewStructureSkipChecks>::Option
 inline constexpr base::FeatureParam<VirtualViewStructureSkipChecks>
     kAutofillVirtualViewStructureAndroidSkipsCompatibilityCheck{
         &kAutofillVirtualViewStructureAndroid, "skip_compatibility_check",
-        VirtualViewStructureSkipChecks::kDontSkip,
+        VirtualViewStructureSkipChecks::kSkipAllChecks,
         &kVirtualViewStructureSkipChecksOption};
 
 #endif  // BUILDFLAG(IS_ANDROID)

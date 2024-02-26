@@ -889,7 +889,7 @@ BASE_FEATURE(kAutofillEnableSecurityTouchEventFilteringAndroid,
 // Android Autofill.
 BASE_FEATURE(kAutofillVirtualViewStructureAndroid,
              "AutofillVirtualViewStructureAndroid",
-             base::FEATURE_DISABLED_BY_DEFAULT);
+             base::FEATURE_ENABLED_BY_DEFAULT);
 
 #endif  // BUILDFLAG(IS_ANDROID)
 
