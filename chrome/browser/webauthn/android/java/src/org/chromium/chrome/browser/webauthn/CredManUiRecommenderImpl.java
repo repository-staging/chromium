@@ -8,6 +8,8 @@ import org.chromium.components.webauthn.cred_man.CredManUiRecommender;
 public class CredManUiRecommenderImpl implements CredManUiRecommender {
     @Override
     public boolean recommendsCustomUi() {
-        return false; // Use the platform CredMan APIs if available.
+        // Requires to be changed when WebAuthenticationAndroidCredMan feature default is changed,
+        // along with its FeatureParam "gpm_in_cred_man", both found at //device/fido/features.h as of M124
+        return true; // Use the platform CredMan APIs if available.
     }
 }

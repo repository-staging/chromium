@@ -36,7 +36,7 @@ BASE_DECLARE_FEATURE(kWebAuthnAndroidCredMan);
 // Use the Android 14 Credential Manager API for credentials stored in Gmscore.
 COMPONENT_EXPORT(DEVICE_FIDO)
 inline constexpr base::FeatureParam<bool> kWebAuthnAndroidGpmInCredMan{
-    &kWebAuthnAndroidCredMan, "gpm_in_cred_man", false};
+    &kWebAuthnAndroidCredMan, "gpm_in_cred_man", true};
 #endif  // BUILDFLAG(IS_ANDROID)
 
 // Advertise hybrid prelinking on Android even if the app doesn't have
