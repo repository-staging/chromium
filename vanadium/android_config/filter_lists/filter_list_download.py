@@ -3,14 +3,16 @@
 # SPDX-License-Identifier: GPL-v2.0
 
 import argparse
+import base64
+import hashlib
 import os
 import ssl
 import sys
 import urllib.request
 
-
 def FetchAndGenerateFilterList(args):
     urls = list(set(args.urls))
+    hasher = hashlib.new('sha256')
     for url in urls:
         if not url.startswith("https://"):
             continue
@@ -23,6 +25,10 @@ def FetchAndGenerateFilterList(args):
                 if not buf:
                     break
                 args.output.write(buf)
+                hasher.update(buf)
+    with open('.'.join([args.output.name, 'sha256']), 'w') as f:
+        f.write(hasher.hexdigest())
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
