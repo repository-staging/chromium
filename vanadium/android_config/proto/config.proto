@@ -65,6 +65,7 @@ message Component {
   int64 version_code = 3;
   repeated Flag dependent_flags = 4;
   ComponentApkSpec apk_spec = 5;
+  repeated AdditionalComponent additional_components = 6;
 
   // Next tag: 2
   enum ComponentType {
@@ -78,5 +79,14 @@ message Component {
   message ComponentApkSpec {
     string pkg_name = 1;
     repeated bytes sha256_certs = 2;
+  }
+
+  message AdditionalComponent {
+    string component_file_name = 2;
+    repeated ComponentCondition conditions = 100;
+  }
+
+  message ComponentCondition {
+    string language = 1;
   }
 }
