@@ -54,6 +54,7 @@ action("config_generation") {
 
 android_library("browser_config_parser_java") {
   sources = [
+    "java/src/app/vanadium/config/VanadiumConfConditionals.java",
     "java/src/app/vanadium/config/VanadiumConfParser.java",
   ]
   deps = [
