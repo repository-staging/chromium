@@ -1,13 +1,9 @@
 package app.vanadium.config;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.os.PatternMatcher;
 import android.os.Process;
 import android.util.ArrayMap;
 import android.util.Log;
@@ -249,38 +245,6 @@ public final class VanadiumConfParser {
         }
 
         parseInBackground(ctx, specType);
-
-        ParsedConfigs curConfigs = getParsedConfigs();
-        if (curConfigs != null && curConfigs.hasOtherComponentApks
-                && curConfigs.components.size() > 0
-                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            IntentFilter filter = new IntentFilter();
-            filter.addAction(Intent.ACTION_PACKAGE_REPLACED);
-            filter.addDataScheme("package");
-            filter.addDataSchemeSpecificPart(ConfigInfo.CONFIG_APK_PACKAGE, PatternMatcher.PATTERN_LITERAL);
-
-            int numComponents = curConfigs.components.size();
-            for (int i = 0; i < numComponents; i++) {
-                ParsedComponent parsedComponent = curConfigs.components.valueAt(i);
-                if (parsedComponent == null || parsedComponent == ParsedComponent.EMPTY) {
-                    continue;
-                }
-
-                if (parsedComponent.componentApkPkgName.isEmpty()) {
-                    continue;
-                }
-
-                filter.addDataSchemeSpecificPart(
-                        parsedComponent.componentApkPkgName, PatternMatcher.PATTERN_LITERAL);
-            }
-
-            ctx.registerReceiver(new BroadcastReceiver() {
-                @Override
-                public void onReceive(Context context, Intent intent) {
-                    parseInBackground(ctx, specType);
-                }
-            }, filter, Context.RECEIVER_NOT_EXPORTED);
-        }
     }
 
     private static boolean verifyConfigPackage(Context ctx) {
