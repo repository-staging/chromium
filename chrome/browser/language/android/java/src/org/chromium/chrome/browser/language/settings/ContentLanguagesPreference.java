@@ -22,6 +22,7 @@ import org.chromium.chrome.browser.flags.ChromeFeatureList;
 import org.chromium.chrome.browser.language.R;
 import org.chromium.chrome.browser.preferences.Pref;
 import org.chromium.chrome.browser.profiles.Profile;
+import org.chromium.chrome.browser.subresource_filter.RulesetUpdater;
 import org.chromium.chrome.browser.translate.TranslateBridge;
 import org.chromium.components.browser_ui.styles.SemanticColorUtils;
 import org.chromium.components.browser_ui.widget.BrowserUiListMenuUtils;
@@ -147,6 +148,7 @@ public class ContentLanguagesPreference extends Preference {
             }
             setDisplayedLanguages(
                     LanguagesManager.getForProfile(getProfile()).getUserAcceptLanguageItems());
+            RulesetUpdater.update(/* ignoreVersionCheck */ true);
         }
     }
 
