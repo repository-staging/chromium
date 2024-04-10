@@ -12,7 +12,9 @@ import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
 import app.vanadium.config.proto.VanadiumConfigProto.Component;
+import app.vanadium.config.proto.VanadiumConfigProto.Component.AdditionalComponent;
 import app.vanadium.config.proto.VanadiumConfigProto.Component.ComponentApkSpec;
+import app.vanadium.config.proto.VanadiumConfigProto.Component.ComponentCondition;
 import app.vanadium.config.proto.VanadiumConfigProto.Component.ComponentType;
 import app.vanadium.config.proto.VanadiumConfigProto.Config;
 import app.vanadium.config.proto.VanadiumConfigProto.Configs;
@@ -125,6 +127,24 @@ public class ConfigGenerator {
 
     private static Component component(UnaryOperator<Component.Builder> componentParams) {
         return componentParams.apply(Component.newBuilder()).build();
+    }
+
+    private static List<AdditionalComponent> additionalComponents(AdditionalComponent... additionalComponents) {
+        return Arrays.asList(additionalComponents);
+    }
+
+    private static AdditionalComponent additionalComponent(
+            UnaryOperator<AdditionalComponent.Builder> additionalComponentParams) {
+        return additionalComponentParams.apply(AdditionalComponent.newBuilder()).build();
+    }
+
+    private static ComponentCondition componentCondition(
+            UnaryOperator<ComponentCondition.Builder> componentConditionParams) {
+        return componentConditionParams.apply(ComponentCondition.newBuilder()).build();
+    }
+
+    private static List<ComponentCondition> componentConditions(ComponentCondition... componentConditions) {
+        return Arrays.asList(componentConditions);
     }
 
     private static long getSpecTypes(SpecType... specTypes) {
