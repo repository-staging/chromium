@@ -12,6 +12,7 @@ base_java_ext_srcjar_deps = [
 ]
 
 base_library_loader_java_ext_java_sources = [
+  "android/java/src/org/chromium/base/command_line/VanadiumCommandLineUtils.java",
 ]
 
 base_library_loader_java_ext_deps = [
