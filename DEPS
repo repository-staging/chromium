@@ -5921,6 +5921,16 @@ hooks = [
               'https://easylist.to/easylist/easylist.txt',
               'https://easylist.to/easylist/easyprivacy.txt']
   },
+  {
+    'name': 'fetch_filter_lists_germany',
+    'condition': 'checkout_android',
+    'action': ['python3',
+              'src/vanadium/android_config/filter_lists/filter_list_download.py',
+              '--output',
+              'src/vanadium/android_config/filter_lists/filter_lists_germany.txt',
+              '--urls',
+              'https://easylist.to/easylistgermany/easylistgermany.txt']
+  },
 ]
 
 # Add any corresponding DEPS files from this list to chromium.exclusions in

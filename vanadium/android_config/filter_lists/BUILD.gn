@@ -15,3 +15,11 @@ generate_unindexed_ruleset_assets("ruleset_assets") {
 
   asset_file_name = "unindexed_ruleset"
 }
+
+generate_unindexed_ruleset_assets("ruleset_germany_assets") {
+  inputs = [
+    "//vanadium/android_config/filter_lists/filter_lists_germany.txt",
+  ]
+
+  asset_file_name = "unindexed_ruleset_germany"
+}

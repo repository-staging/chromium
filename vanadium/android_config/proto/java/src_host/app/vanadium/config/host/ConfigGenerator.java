@@ -34,6 +34,13 @@ public class ConfigGenerator {
                         component(componentParams -> componentParams.setComponentType(ComponentType.SUBRESOURCE_FILTER_TOOLS)
                                 .setComponentFileName("unindexed_ruleset")
                                 .setVersionCode(1L)
+                                .addAllAdditionalComponents(additionalComponents(
+                                        additionalComponent(additionalComponentParams -> additionalComponentParams.setComponentFileName("unindexed_ruleset_germany")
+                                                .addAllConditions(componentConditions(
+                                                        componentCondition(componentConditionParams -> componentConditionParams.setLanguage("de"))
+                                                ))
+                                        )
+                                ))
                         )
                 ))
         ));
