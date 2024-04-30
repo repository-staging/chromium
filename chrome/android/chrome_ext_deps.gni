@@ -4,6 +4,7 @@
 
 chrome_ext_deps = [
   "//chrome/browser/subresource_filter/android:java",
+  "//vanadium/android_config/proto:browser_config_parser_java",
 ]
 
 chrome_ext_srcjar_deps = [
