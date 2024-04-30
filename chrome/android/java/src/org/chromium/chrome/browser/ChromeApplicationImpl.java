@@ -51,9 +51,16 @@ public class ChromeApplicationImpl extends SplitCompatApplication.Impl {
     public ChromeApplicationImpl() {}
 
     @Override
+    public void postAttachBaseContext() {
+        super.postAttachBaseContext();
+        ChromeApplicationImplHooks.postAttachBaseContext();
+    }
+
+    @Override
     public void onCreate() {
         super.onCreate();
 
+        ChromeApplicationImplHooks.onCreate();
         if (SplitCompatApplication.isBrowserProcess()) {
             FontPreloader.getInstance().load(getApplication());
 
@@ -117,6 +124,8 @@ public class ChromeApplicationImpl extends SplitCompatApplication.Impl {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
+
+        ChromeApplicationImplHooks.onConfigurationChanged(newConfig);
         // TODO(huayinz): Add observer pattern for application configuration changes.
         if (SplitCompatApplication.isBrowserProcess()) {
             SystemNightModeMonitor.getInstance().onApplicationConfigurationChanged();
