@@ -94,6 +94,9 @@ public class SplitCompatApplication extends Application {
             mApplication.superStartActivity(intent, options);
         }
 
+        @CallSuper
+        public void postAttachBaseContext() {}
+
         public void onCreate() {}
 
         public void onTrimMemory(int level) {}
@@ -121,6 +124,10 @@ public class SplitCompatApplication extends Application {
      */
     private void superStartActivity(Intent intent, Bundle options) {
         super.startActivity(intent, options);
+    }
+
+    final void postAttachBaseContext() {
+        getImpl().postAttachBaseContext();
     }
 
     // Called by the framework for ALL processes. Runs before ContentProviders are created.

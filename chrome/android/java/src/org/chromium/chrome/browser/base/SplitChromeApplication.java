@@ -68,6 +68,7 @@ public class SplitChromeApplication extends SplitCompatApplication {
         } else {
             setImplSupplier(() -> createNonBrowserApplication());
         }
+        super.postAttachBaseContext();
     }
 
     @Override
