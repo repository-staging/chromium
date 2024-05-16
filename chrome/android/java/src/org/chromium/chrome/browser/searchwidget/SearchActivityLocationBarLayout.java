@@ -112,7 +112,20 @@ public class SearchActivityLocationBarLayout extends LocationBarLayout {
             @SearchType int searchType,
             @Nullable String optionalText,
             @NonNull WindowAndroid windowAndroid) {
+        beginQuery(origin, searchType, optionalText, windowAndroid, true);
+    }
 
+    /**
+     * See {@link SearchActivityLocationBarLayout#beginQuery(int, int, String, WindowAndroid)}
+     * for details. Added parameter(s):
+     * @param shouldSelectAllText Indicates if selection state of search query should be all selected or not.
+     */
+    void beginQuery(
+            @IntentOrigin int origin,
+            @SearchType int searchType,
+            @Nullable String optionalText,
+            @NonNull WindowAndroid windowAndroid,
+            boolean shouldSelectAllText) {
         if (origin == IntentOrigin.CUSTOM_TAB) {
             mUrlBar.setHint(R.string.omnibox_on_cct_empty_hint);
         } else {
@@ -124,7 +137,7 @@ public class SearchActivityLocationBarLayout extends LocationBarLayout {
         mUrlCoordinator.setUrlBarData(
                 UrlBarData.forNonUrlText(optionalText == null ? "" : optionalText),
                 UrlBar.ScrollType.NO_SCROLL,
-                SelectionState.SELECT_ALL);
+                shouldSelectAllText ? SelectionState.SELECT_ALL : SelectionState.SELECT_END);
 
         if (mPendingSearchPromoDecision || (searchType != SearchType.TEXT && !mNativeInitialized)) {
             mPendingBeginQuery = true;

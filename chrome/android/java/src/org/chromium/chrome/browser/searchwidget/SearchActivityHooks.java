@@ -27,4 +27,18 @@ public class SearchActivityHooks {
         return IntentUtils.safeGetBooleanExtra(intent,
                 IntentHandler.EXTRA_OPEN_NEW_INCOGNITO_TAB, false);
     }
+
+    public static final String EXTRA_SELECT_ALL_TEXT =
+            "org.chromium.chrome.browser.searchwidget.SELECT_ALL_TEXT";
+
+    static boolean getShouldSelectAllQueryTextInSearchBox(Intent intent) {
+        String prepopulatedIntentQuery = SearchActivityUtils.getIntentQuery(intent);
+        prepopulatedIntentQuery = prepopulatedIntentQuery != null ? prepopulatedIntentQuery : "";
+
+        if (prepopulatedIntentQuery.isEmpty()) {
+            return true;
+        }
+
+        return IntentUtils.safeGetBooleanExtra(intent, EXTRA_SELECT_ALL_TEXT, true);
+    }
 }

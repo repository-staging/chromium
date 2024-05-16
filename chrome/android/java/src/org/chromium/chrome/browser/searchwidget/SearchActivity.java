@@ -623,7 +623,8 @@ public class SearchActivity extends AsyncInitializationActivity
                 mIntentOrigin,
                 mSearchType,
                 SearchActivityUtils.getIntentQuery(getIntent()),
-                getWindowAndroid());
+                getWindowAndroid(),
+                SearchActivityHooks.getShouldSelectAllQueryTextInSearchBox(getIntent()));
     }
 
     @Override
