@@ -107,7 +107,7 @@ const base::FeatureParam<bool> kTpcdReadHeuristicsGrants{
 
 BASE_FEATURE(kContentSettingsPartitioning,
              "ContentSettingsPartitioning",
-             base::FEATURE_DISABLED_BY_DEFAULT);
+             base::FEATURE_ENABLED_BY_DEFAULT);
 
 BASE_FEATURE(kIndexedHostContentSettingsMap,
              "IndexedHostContentSettingsMap",
