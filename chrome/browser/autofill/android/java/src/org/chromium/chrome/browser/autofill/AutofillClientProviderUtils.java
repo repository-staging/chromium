@@ -55,6 +55,16 @@ public class AutofillClientProviderUtils {
             // Technically correct. Not a useful status since the feature must be set.
             return AndroidAutofillAvailabilityStatus.SETTING_TURNED_OFF;
         }
+        final String SKIP_COMPATIBILITY_CHECK_PARAM_NAME = "skip_compatibility_check";
+        final String SKIP_ALL_CHECKS_PARAM_VALUE = "skip_all_checks";
+        boolean skipAllChecks = !SKIP_ALL_CHECKS_PARAM_VALUE.equals(
+                ChromeFeatureList.getFieldTrialParamByFeature(
+                        ChromeFeatureList.AUTOFILL_VIRTUAL_VIEW_STRUCTURE_ANDROID,
+                        SKIP_COMPATIBILITY_CHECK_PARAM_NAME));
+        if (skipAllChecks) {
+            return getAndroidAutofillFrameworkAvailabilityUnchecked(prefs);
+        }
+
         if (!prefs.getBoolean(Pref.AUTOFILL_THIRD_PARTY_PASSWORD_MANAGERS_ALLOWED)) {
             return AndroidAutofillAvailabilityStatus.NOT_ALLOWED_BY_POLICY;
         }
@@ -80,6 +90,11 @@ public class AutofillClientProviderUtils {
         if (AWG_COMPONENT_NAME.equals(componentName.flattenToString())) {
             return AndroidAutofillAvailabilityStatus.ANDROID_AUTOFILL_SERVICE_IS_GOOGLE;
         }
+
+        return getAndroidAutofillFrameworkAvailabilityUnchecked(prefs);
+    }
+
+    private static int getAndroidAutofillFrameworkAvailabilityUnchecked(PrefService prefs) {
         if (!prefs.getBoolean(Pref.AUTOFILL_USING_VIRTUAL_VIEW_STRUCTURE)) {
             return AndroidAutofillAvailabilityStatus.SETTING_TURNED_OFF;
         }
