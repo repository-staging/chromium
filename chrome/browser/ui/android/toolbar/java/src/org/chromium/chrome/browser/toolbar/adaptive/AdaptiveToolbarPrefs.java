@@ -41,7 +41,7 @@ public class AdaptiveToolbarPrefs {
     public static @AdaptiveToolbarButtonVariant int getCustomizationSetting() {
         return ChromeSharedPreferences.getInstance()
                 .readInt(
-                        ADAPTIVE_TOOLBAR_CUSTOMIZATION_SETTINGS, AdaptiveToolbarButtonVariant.AUTO);
+                        ADAPTIVE_TOOLBAR_CUSTOMIZATION_SETTINGS, AdaptiveToolbarButtonVariant.NEW_TAB);
     }
 
     /**
