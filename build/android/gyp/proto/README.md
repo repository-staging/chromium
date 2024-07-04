@@ -11,3 +11,7 @@ Then copy the resulting \*pb2.py files from some_dir here. To make sure
 Resources_pb2.py is able to import Configuration_pb2.py, replace the
 "from frameworks.base.tools.aapt2" portion of the import statement with
 "from ." so it will instead be imported from the current directory.
+
+# Additional notes from downstream, for newer protobuf versions
+Additionally, remove the runtime version imports and its usage to check
+protobuf runtime version, which is currently unsupported at upstream.
