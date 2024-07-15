@@ -321,6 +321,9 @@ public final class VanadiumConfParser {
     private static void parseInBackground(Context ctx, SpecType specType) {
         futureParsedConfigs = executor.submit(() -> {
             parsedConfigs = parse(ctx, specType);
+            if (parsedConfigs != null) {
+                SubresourceFilterComponentUtils.initialize(ctx);
+            }
             return parsedConfigs;
         });
     }

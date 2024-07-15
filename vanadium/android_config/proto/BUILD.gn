@@ -60,6 +60,15 @@ android_library("browser_config_parser_java") {
     ":config_proto_java",
     "//vanadium/android_config:configinfo_java",
   ]
+
+  # additional sources for subresource filtering component
+  sources += [
+    "java/src/app/vanadium/config/SubresourceFilterComponentUtils.java",
+  ]
+
+  deps += [
+    "//vanadium/ext/utils:file_utils_java",
+  ]
 }
 
 android_assets("config_assets") {
