@@ -373,6 +373,10 @@ config("compiler") {
       }
     }
 
+    if (target_cpu == "arm64") {
+      cflags += [ "-fstack-clash-protection" ]
+    }
+
     if (use_lld) {
       ldflags += [ "-fuse-ld=lld" ]
       if (lld_path != "") {
