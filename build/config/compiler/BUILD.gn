@@ -341,6 +341,12 @@ config("compiler") {
     # --------------------------------
     cflags += [ "-fno-strict-aliasing" ]  # See http://crbug.com/32204
 
+    if (enable_shadow_call_stack) {
+      if (!is_android || current_cpu != "arm64") {
+        enable_shadow_call_stack = false
+      }
+    }
+
     # Stack protection. ShadowCallStack and Stack protector address the same
     # problems. Therefore, we only enable one or the other. Clang advertises SCS as
     # a stronger alternative to StackProtector, so we give SCS precedence over SP.
