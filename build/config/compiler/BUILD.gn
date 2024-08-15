@@ -358,7 +358,10 @@ config("compiler") {
 
       scs_parameters = [
         "-fsanitize=shadow-call-stack",
-        "-fno-stack-protector",
+        # In Vanadium, we always enable fstack protector strong as fallback to SCS.
+        # This is to allow disabling SCS, if and only if necessary, without regressing previous stack protection
+        # on previous releases, and to preserve compatibility with some apps using WebView.
+        "-fstack-protector-strong",
       ]
       cflags += scs_parameters
       ldflags += scs_parameters
