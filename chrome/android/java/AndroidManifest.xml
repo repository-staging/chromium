@@ -182,6 +182,12 @@ by a child template that "extends" this file.
       </queries>
     {% endif %}
 
+    {% if config_apk_package is defined %}
+    <queries>
+      <package android:name="{{ config_apk_package }}" />
+    </queries>
+    {% endif %}
+
     <!-- Set android:largeHeap to "true" to allow more than the default
          Java heap limit (32Mb on Nexus S, 48Mb on Xoom). -->
       <application android:name="{% block application_name %}org.chromium.chrome.browser.base.SplitChromeApplication{% endblock %}"

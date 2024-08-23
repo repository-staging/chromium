@@ -14,6 +14,7 @@ import("//chrome/version.gni")
 import("//components/crash/android/silent_java_assert_reporting.gni")
 import("//device/vr/buildflags/buildflags.gni")
 import("//tools/v8_context_snapshot/v8_context_snapshot.gni")
+import("//vanadium/android_config/config_apk_vars.gni")
 
 declare_args() {
   # Android package name to use when compiling the system_webview_apk and
@@ -71,6 +72,7 @@ template("system_webview_apk_or_module_tmpl") {
     variables = [
       "force_32_bit=$_force_32_bit",
       "manifest_package=$_manifest_package",
+      "config_apk_package=$config_apk_package",
     ]
     if (_is_trichrome) {
       variables += trichrome_jinja_variables +
