@@ -41,6 +41,10 @@ template("config_apk_tmpl") {
     _apk_name = invoker.apk_name
   }
 
+  if (defined(invoker.force_queryable)) {
+    _config_force_queryable = invoker.force_queryable
+  }
+
   _android_manifest = "$target_gen_dir/$target_name/AndroidManifest.xml"
   _android_manifest_target_name = "${target_name}__android_manifest"
 
@@ -53,6 +57,12 @@ template("config_apk_tmpl") {
     if (defined(_application_label)) {
       variables += [
         "application_label=$_application_label",
+      ]
+    }
+
+    if (defined(_config_force_queryable)) {
+      variables += [
+        "config_force_queryable=$_config_force_queryable",
       ]
     }
 
