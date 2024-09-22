@@ -127,6 +127,13 @@ class AutofillOptionsMediator implements ModalDialogProperties.Controller {
         if (prefs().getBoolean(Pref.AUTOFILL_USING_VIRTUAL_VIEW_STRUCTURE)) {
             return false; // Always allow to flip back to built-in password management.
         }
+        final String skipCompatCheckParamValue =
+                ChromeFeatureList.getFieldTrialParamByFeature(
+                        ChromeFeatureList.AUTOFILL_VIRTUAL_VIEW_STRUCTURE_ANDROID,
+                        SKIP_COMPATIBILITY_CHECK_PARAM_NAME);
+        final boolean skipCompatCheckParamValueIsEmpty = skipCompatCheckParamValue == null
+                || skipCompatCheckParamValue.isEmpty() || skipCompatCheckParamValue.isBlank();
+        final boolean isReadOnlyByDefault = false;
         switch (AutofillClientProviderUtils.getAndroidAutofillFrameworkAvailability(prefs())) {
             case AndroidAutofillAvailabilityStatus.NOT_ALLOWED_BY_POLICY:
                 return true;
@@ -137,11 +144,17 @@ class AutofillOptionsMediator implements ModalDialogProperties.Controller {
             case AndroidAutofillAvailabilityStatus.ANDROID_AUTOFILL_MANAGER_NOT_AVAILABLE:
             case AndroidAutofillAvailabilityStatus.ANDROID_AUTOFILL_NOT_SUPPORTED:
             case AndroidAutofillAvailabilityStatus.UNKNOWN_ANDROID_AUTOFILL_SERVICE:
+                if (skipCompatCheckParamValueIsEmpty) {
+                    return isReadOnlyByDefault;
+                }
                 return !SKIP_ALL_CHECKS_PARAM_VALUE.equals(
                         ChromeFeatureList.getFieldTrialParamByFeature(
                                 ChromeFeatureList.AUTOFILL_VIRTUAL_VIEW_STRUCTURE_ANDROID,
                                 SKIP_COMPATIBILITY_CHECK_PARAM_NAME));
             case AndroidAutofillAvailabilityStatus.ANDROID_AUTOFILL_SERVICE_IS_GOOGLE:
+                if (skipCompatCheckParamValueIsEmpty) {
+                    return isReadOnlyByDefault;
+                }
                 return !SKIP_ALL_CHECKS_PARAM_VALUE.equals(
                                 ChromeFeatureList.getFieldTrialParamByFeature(
                                         ChromeFeatureList.AUTOFILL_VIRTUAL_VIEW_STRUCTURE_ANDROID,

@@ -86,7 +86,11 @@ bool UsesVirtualViewStructureForAutofill(PrefService& prefs) {
 }  // namespace
 
 AutofillClientProvider::AutofillClientProvider(PrefService* prefs)
-    : uses_platform_autofill_(UsesVirtualViewStructureForAutofill(*prefs)) {
+    : uses_platform_autofill_(UsesVirtualViewStructureForAutofill(*prefs)
+#if BUILDFLAG(IS_ANDROID)
+        && prefs->GetBoolean(prefs::kAutofillUsingVirtualViewStructure)
+#endif  // BUILDFLAG(IS_ANDROID)
+    ) {
 #if BUILDFLAG(IS_ANDROID)
   RecordWhetherAndroidPrefResets(*prefs, uses_platform_autofill_);
   // Ensure the pref is reset if platform autofill is restricted.
